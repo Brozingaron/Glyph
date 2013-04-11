@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ui\effects\outOfTheWay.js">
+    <Files>
+      <File FileName="Assets\Scripts\ent\enemyDeath.js" Line="40" Column="56" />
+      <File FileName="Assets\Scripts\ent\linearFollow.js" Line="66" Column="65" />
+      <File FileName="Assets\Scripts\ui\gameManager.js" Line="62" Column="80" />
+      <File FileName="Assets\Scripts\ui\effects\outOfTheWay.js" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
