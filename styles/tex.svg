@@ -1,0 +1,15 @@
+<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <radialGradient r="1" cy="1" cx="0.5" spreadMethod="pad" id="svg_1">
+   <stop offset="0" stop-opacity="0.996094" stop-color="#406480"/>
+   <stop offset="1" stop-opacity="0.996094" stop-color="#0d141a"/>
+  </radialGradient>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <circle fill-opacity="0.25" id="svg_2" r="3" cy="3" cx="3" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#000000"/>
+  <circle id="svg_3" r="0" cy="4.074074" cx="4.703704" opacity="0.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#000000"/>
+  <circle id="svg_4" fill-opacity="0.25" r="3" cy="10" cx="10" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#000000"/>
+ </g>
+</svg>
