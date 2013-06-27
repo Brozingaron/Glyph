@@ -2,10 +2,17 @@
 
 //Fades the Splash Screen out of view
 
+var blank : boolean = false; // If this object is the empty screen or the image
+
 function Start () {
-	//transform.eulerAngles.y = 0; //Set the Y rotation to 0, the splash object is kept at 180 degrees to keep it out of the way during development
-	iTween.FadeTo(gameObject,{"alpha":0.0,"time":1.0,"delay":2.0,"easetype":"easeInOutQuart"}); //iTween Function
-	Destroy (gameObject,4); //Destroy the object after 5 seconds
-	GameObject.Find("Main Camera").GetComponent(sceneManager).newScene = 1;
-	GameObject.Find("Main Camera").GetComponent(sceneManager).animTime = 3;
+	if (blank == false){
+		iTween.FadeTo(gameObject,{"alpha":0.0,"time":1.0,"delay":4,"easetype":"easeInOutQuart"}); //iTween Function
+		Destroy (gameObject,10); //Destroy the object after 10 seconds
+		GameObject.Find("Main Camera").GetComponent(sceneManager).newScene = 1;
+		GameObject.Find("Main Camera").GetComponent(sceneManager).animTime = 5;
+	}
+	else{
+		iTween.FadeTo(gameObject,{"alpha":0.0,"time":0.5,"easetype":"easeInOutQuart"}); // iTween
+		Destroy (gameObject,10); //Destroy the object after 1 second
+	}
 }

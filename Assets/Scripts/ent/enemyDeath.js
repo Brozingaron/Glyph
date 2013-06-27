@@ -9,7 +9,7 @@ var health : float = 1; // Allows partial damage to enemies
 
 private var distance : float; // Distance from the player to this enemy. Used in damage calculation
 private var dead : boolean = false; // If this enemy is dead
-
+private var suicidal : boolean = false; // If this enemy was killed because the game ended
 
 function Update () {
 	// React to abilities
@@ -41,12 +41,12 @@ function Update () {
 		};
 	};
 	
-	if ( health <= 0 && dead == false ){
+	if ( health <= 0 && dead == false && suicidal == false ){
 		// If health is less than or equal to 0, die and inform the gameManager that
 		// there has been another casualty
-		die();
-		GameObject.Find("gameMan").GetComponent(gameManager).killed();
 		dead = true; // Don't die again
+		GameObject.Find("gameMan").GetComponent(gameManager).killed();
+		die();
 	}
 }
 
@@ -62,6 +62,8 @@ function die () {
 	if (GetComponent(linearFollow) != null){
 		Destroy(GetComponent(linearFollow));
 	};
+	// Disable the particle system
+	transform.FindChild("Trail").particleSystem.Stop();
 	// Do entity spawn animations in reverse
 	iTween.ScaleTo(spriteObject,{"x":0,"y":0,"easetype":"easeOutSine","time":.5,"oncomplete":"finalBlow","oncompletetarget":gameObject}); // Zoom animation scale
 	iTween.FadeTo(spriteObject,{"alpha":0,"easetype":"easeOutSine","time":0.25}); // Zoom animation fade
@@ -70,6 +72,14 @@ function die () {
 function finalBlow () {
 	// Removes the object from the scene
 	// This function is called by iTween when the enemy animates out
+	
+	// Reset to origin to fade menu bar back in
+	gameObject.transform.position.x = 0;
+	gameObject.transform.position.y = 0;
+	Invoke("finalFinalBlow",Time.deltaTime);
+}
+
+function finalFinalBlow () {
 	Destroy(gameObject);
 }
 
@@ -77,4 +87,5 @@ function suicide (){
 	// Kill self if touches the player
 	// Fancier events can be added later
 	die();
+	suicidal = true;
 }

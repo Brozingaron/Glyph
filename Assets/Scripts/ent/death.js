@@ -8,6 +8,8 @@ var spriteObject : GameObject;
 var trailObject : GameObject;
 var Death : GameObject;
 
+var deathSound : AudioClip;
+
 var god : boolean = false; // For INTERNAL TESTING ONLY
 private var dead : boolean = false;
 
@@ -35,7 +37,8 @@ function die () {
 	GameObject.Find("gameMan").GetComponent(gameManager).dead = true;
 	
 	// Stop spawning enemies
-	Destroy(GameObject.Find("Field").GetComponent(spawn));
+	if( Application.loadedLevel == 6 ){Destroy(GameObject.Find("Field").GetComponent(arcadeSpawn));};
+	if( Application.loadedLevel == 7 ){Destroy(GameObject.Find("Field").GetComponent(insaneSpawn));};
 	
 	// Kill all enemies
 	var enemy : GameObject[];
@@ -47,9 +50,13 @@ function die () {
 	// Explode
 	GameObject.Find("playerSplosion").particleSystem.Emit(1);
 	trailObject.particleSystem.enableEmission = false;
+	// Play the death sound
+	audio.PlayOneShot(deathSound);
 	// Fade
 	iTween.ScaleTo(spriteObject,{"x":0,"y":0,"easetype":"easeOutSine","time":.5,"delay":0.1});
 	// Show the death screen
 	var dScreen = Instantiate(Death,Vector3(0,0,50),Quaternion.Euler(0,0,0));
 	dScreen.transform.parent = GameObject.Find("Border").transform; //Make the death screen a child of the Border beacue it animates
+	// Make the music quieter
+	GameObject.Find("Music(Clone)").GetComponent(musicManager).fade(0.25);
 }

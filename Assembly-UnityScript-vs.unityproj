@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_2;UNITY_4_1;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_LINUX;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_5;UNITY_4_1;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,27 +46,44 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ent\death.js" />
      <Compile Include="Assets\Scripts\ent\enemyDeath.js" />
+     <Compile Include="Assets\Scripts\ent\fountainDespawn.js" />
      <Compile Include="Assets\Scripts\ent\linearFollow.js" />
      <Compile Include="Assets\Scripts\ent\mouseAttatch.js" />
-     <Compile Include="Assets\Scripts\ent\spawn.js" />
-     <Compile Include="Assets\Scripts\ui\abilityGradient.js" />
-     <Compile Include="Assets\Scripts\ui\button.js" />
-     <Compile Include="Assets\Scripts\ui\countDown.js" />
+     <Compile Include="Assets\Scripts\ent\scoreHide.js" />
+     <Compile Include="Assets\Scripts\ent\spawn\arcadeSpawn.js" />
+     <Compile Include="Assets\Scripts\ent\spawn\insaneSpawn.js" />
+     <Compile Include="Assets\Scripts\managers\gameManager.js" />
+     <Compile Include="Assets\Scripts\managers\musicManager.js" />
+     <Compile Include="Assets\Scripts\managers\preferenceManager.js" />
+     <Compile Include="Assets\Scripts\managers\sceneManager.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\button.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\buttonHelper.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\graphicsHelper.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\settingsHelper.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\controlSlider.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\minimalParticles.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\resolutionary.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\sound.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\vSync.js" />
+     <Compile Include="Assets\Scripts\ui\buttons\videoSlider.js" />
      <Compile Include="Assets\Scripts\ui\dev\fps.js" />
      <Compile Include="Assets\Scripts\ui\effects\backgroundRotate.js" />
-     <Compile Include="Assets\Scripts\ui\effects\deathAnim.js" />
-     <Compile Include="Assets\Scripts\ui\effects\entSpawn.js" />
      <Compile Include="Assets\Scripts\ui\effects\fancyBackground.js" />
      <Compile Include="Assets\Scripts\ui\effects\nothing suspicous\backgroundEgg.js" />
      <Compile Include="Assets\Scripts\ui\effects\nothing suspicous\eastereggs.js" />
-     <Compile Include="Assets\Scripts\ui\effects\outOfTheWay.js" />
-     <Compile Include="Assets\Scripts\ui\effects\scoreAnim.js" />
      <Compile Include="Assets\Scripts\ui\effects\splashFade.js" />
      <Compile Include="Assets\Scripts\ui\endStats.js" />
-     <Compile Include="Assets\Scripts\ui\gameManager.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\abilityGradient.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\countDown.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\deathAnim.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\entSpawn.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\outOfTheWay.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\pauseButton.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\pauseGUI.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\scoreAnim.js" />
      <Compile Include="Assets\Scripts\ui\persistance.js" />
      <Compile Include="Assets\Scripts\ui\raySpam.js" />
-     <Compile Include="Assets\Scripts\ui\sceneManager.js" />
+     <Compile Include="Assets\Scripts\ui\splashText.js" />
      <Compile Include="Assets\Scripts\ui\textScale.js" />
   </ItemGroup>
   <ItemGroup>
