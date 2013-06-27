@@ -18,6 +18,7 @@
 <div id="sidebar">
 <a href="/Glyph/">Home</a>
 <br /><a href="/Glyph/download/">Download</a><div id="glow"><img src="/Glyph/styles/glow.png" height=41px/></div>
+<br /><a href="/Glyph/music/">Music</a>
 <br /><a href="http://brozingaron.github.com/GiMU/">GiMU</a>
 <br /><a href="/Glyph/blog/">Blog</a>
 </div>
@@ -25,15 +26,38 @@
 <div class="content">
 <h1>Get Glyph</h1>
 <p class="postDate">April 11, 2013</p>
-<br /><h3>Alpha 1: Choose a download</h3>
+<br /><h3>Alpha 2: Choose a download</h3>
 <br />
-<div style="height:220px;width:620px;margin-left:auto;margin-right:auto;">
+<div style="height:460px;width:420px;margin-left:auto;margin-right:auto;-webkit-border-radius: 10px;border-radius: 10px;border:2px solid rgba(0,0,0,0.1);">
 <br /><h2 style="text-align:center;">Choose your operating system</h2>
 <br /><a href="https://github.com/Brozingaron/Glyph/archive/win32.zip"><img src="win.png" width=200px/></a>
 <br /><a href="https://github.com/Brozingaron/Glyph/archive/mac.zip"><img style="position:relative;bottom:200px;left:220px;" src="mac.png" width=190px/></a>
-<br /><a href="https://github.com/Brozingaron/Glyph/archive/lin_x86.zip"><img style="position:relative;bottom:395px;left:425px" src="lin.png" width=200px/></a>
+<br /><a href="https://github.com/Brozingaron/Glyph/archive/lin_x86.zip"><img style="position:relative;bottom:200px;left:0px" src="lin.png" width=200px/></a>
+<br /><a href="https://github.com/Brozingaron/Glyph/archive/master.zip"><img style="position:relative;bottom:400px;left:220px" src="source.png" width=200px/></a>
 </div>
-<br /><p style="text-align:center;">All downloads are .zip files for x86 systems</p>
+<p style="text-align:center;font-style:italic;">All downloads are .zip files for x86 systems
+<br />The source code download above is for <a href="http://www.unity3d.com">Unity</a>.
+<br />Source cannot be natively played on any platform without being compiled.</p>
+<h2>Alpha 2 Release Notes</h2>
+<ul>
+<li>Added energy fountains</li>
+<ul><li>hover over them to speed up your recharge rate by a factor of 2.</li></ul>
+<li>Changed recharge rates</li>
+<ul><li>5, 15, 25, and 45 seconds from the previous bar respectively.</li></ul>
+<li>Gameplay progression</li>
+<li>Added music</li>
+<li>Added splash text</li>
+<li>Most menus are navigable with the keyboard</li>
+<li>New settings menu</li>
+<li>New graphics options</li>
+<li>Removed startup settings screen</li>
+<li>Removed FPS meter</li>
+</ul>Known Bugs:
+<ul>
+<li>With a lot of enemies on the screen, framerates drop dramatically due to path calculations</li>
+<ul><li>The issue is not render time, but CPU calculation time. With 200+ enemies, the main thread can take between 3 and 5 seconds opposed to a preferred 15-25 ms.</li></ul>
+<li>Insane Mode is not a bug.</li>
+</ul><a href="/Glyph/blog/permalink.html?001">See the blog for more details</a>
 <h2>Alpha 1 Release Notes</h2>
 <br />Alpha 1 is the initial release of Glyph. Arcade mode is the only gameplay style currently available, but other modes and new abilities and gameplay mechanics will be added in future updates.
 <br />
@@ -42,10 +66,6 @@
 <br />
 <div style="margin-left:auto;margin-right:auto;width:568px;"><a href="steps.png"><img src="steps.png" width=568 /></a></div>
 <br />To run Glyph, you need to change its permissions. This process is different depending on what distribution you're running, but you need to allow the file "Glyph" to be run as a program. On Ubuntu 12.10, right click the file, click "Properties", and under the "Permissions" tab, tick "Allow executing file as program." Then click "OK" to exit the dialogue. You can see screenshots in the image above. Click it for a larger image.
-<br />
-<br />Another quirk on Linux is that there isn't a screen resolution dialogue like Windows and Max OS X. To change your screen resolution, run Glyph, close it, and edit the configuration file at "~/.config/unity3d/Brozingaron/Glyph/prefs". You may have to show hidden files to open it in a directory viewer like Nautilis. The file itself is relativley simple and generic, but make sure that if you change the screen resolution that it has an <a href="http://andrew.hedges.name/experiments/aspect_ratio/">aspect ratio</a> of 16:9.
-<br />
-<br />I'm sorry for that inconvenience, but don't worry, Alpha 2 will have the settings menu in-game.
 </div>
 <div id="dots"></div>
 </div></body>
