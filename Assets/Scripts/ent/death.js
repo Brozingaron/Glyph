@@ -7,34 +7,40 @@ private var touch : GameObject;
 var spriteObject : GameObject;
 var trailObject : GameObject;
 var Death : GameObject;
+var gameMan : gameManager;
 
 var deathSound : AudioClip;
 
 var god : boolean = false; // For INTERNAL TESTING ONLY
 private var dead : boolean = false;
 
-function OnCollisionEnter(touch : Collision) {
-	//If a collision is detected between another rigidbody object...
-	if ( touch.gameObject.GetComponent(linearFollow) != null ){
-		if ( touch.gameObject.GetComponent(linearFollow).lethal == true ){
+function OnCollisionStay(touch : Collision) {
+	//If a collision is detected between another rigidbody object and the player isn't invincible as indicated by transparency...
+	if ( spriteObject.renderer.material.color.a == 1.0 ){
+		if ( touch.gameObject.GetComponent(linearFollow) != null && touch.gameObject.GetComponent(linearFollow).lethal == true ){
 			//See if it's lethal. If yes, kill it and the player
 			touch.gameObject.GetComponent(enemyDeath).suicide();
-			if (god == false && dead == false){
-				dead = true; // Only die once
-				die();
-			};
+			gameMan.die();
 		};
-	}
+	};
 };
 
-function die () {
+function damaged () {
+	// Animate to indicate the player is temporarily invincible
+	spriteObject.renderer.material.color.a = 0.0;
+	iTween.FadeTo(spriteObject,{"alpha":.50,"time":0.1,"delay":0.0});
+	iTween.FadeTo(spriteObject,{"alpha":.25,"time":0.1,"delay":0.1});
+	iTween.FadeTo(spriteObject,{"alpha":.50,"time":0.1,"delay":0.2});
+	iTween.FadeTo(spriteObject,{"alpha":.25,"time":0.1,"delay":0.3});
+	iTween.FadeTo(spriteObject,{"alpha":1.0,"time":0.2,"delay":0.4});
+}
+
+function fatal () {
+	// Called by gameManager to end the game
 	Screen.showCursor = true;
 	Screen.lockCursor = false;
 	
 	Destroy(GetComponent(mouseAttatch));
-	
-	// Tell the game Manager that you're dead
-	GameObject.Find("gameMan").GetComponent(gameManager).dead = true;
 	
 	// Stop spawning enemies
 	if( Application.loadedLevel == 6 ){Destroy(GameObject.Find("Field").GetComponent(arcadeSpawn));};

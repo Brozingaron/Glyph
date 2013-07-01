@@ -6,16 +6,15 @@
 // Define some game objects
 private var raySpammer : raySpam;
 // Main buttons
-private var mainButtonCount : int = 6; // How many buttons are on screen
-var button1 : resolutionary;
-var button2 : resolutionary;
-var button3 : resolutionary;
-var button4 : resolutionary;
-var button5 : minimalParticles;
-var button6 : vSync;
+private var mainButtonCount : int = 4; // How many buttons are on screen
+var button1 : controlSlider;
+var button2 : button;
+var button3 : videoSlider;
+var button4 : button;
 // Bottom buttons
-private var altButtonCount : int = 0; // How many alt buttons are on screen
+private var altButtonCount : int = 1; // How many alt buttons are on screen
 var altButton0 : button; // The button on the far left
+var altButton1 : sound; // The rest are on the right
 
 // Keep track of what's in focus
 private var helping : boolean = false; //If the helper is controlling buttons
@@ -40,9 +39,6 @@ function Update () {
 			helping = true;
 			alt = false;
 			button = 1;
-			if(button == 1 && button1.disabled == true){button = 2;};
-			if(button == 2 && button2.disabled == true){button = 3;};
-			if(button == 3 && button3.disabled == true){button = 4;};
 		};
 		if (Input.GetButtonDown("left")){
 			raySpammer.on = false;
@@ -61,18 +57,9 @@ function Update () {
 		if (alt == false){
 			if (Input.GetButtonDown("up")){
 				button -= 1;
-				if(button == 3 && button1.disabled == true){button = 2;};
-				if(button == 2 && button2.disabled == true){button = 1;};
-				if(button == 1 && button3.disabled == true){button = 6;};
 			};
 			if (Input.GetButtonDown("down")){
 				button += 1;
-				if (button > mainButtonCount){
-					button = 1;
-				};
-				if(button == 1 && button1.disabled == true){button = 2;};
-				if(button == 2 && button2.disabled == true){button = 3;};
-				if(button == 3 && button3.disabled == true){button = 4;};
 			};
 			// Take maximums into account
 			if (button <= 0){
@@ -121,15 +108,14 @@ function Update () {
 		raySpammer.on = false; //Disable the ray spammer
 		Clear();
 		if (alt == false){
-			if (button == 1){button1.gameObject.renderer.material.mainTexture = button1.hover;};
-			if (button == 2){button2.gameObject.renderer.material.mainTexture = button2.hover;};
-			if (button == 3){button3.gameObject.renderer.material.mainTexture = button3.hover;};
-			if (button == 4){button4.gameObject.renderer.material.mainTexture = button4.hover;};
-			if (button == 5){button5.gameObject.renderer.material.mainTexture = button5.hover;};
-			if (button == 6){button6.gameObject.renderer.material.mainTexture = button6.hover;};
+			if (button == 1){button1.onRaycastHit();};
+			if (button == 2){button2.onRaycastHit();};
+			if (button == 3){button3.onRaycastHit();};
+			if (button == 4){button4.onRaycastHit();};
 		}
 		else{
-			if (button == 0){altButton0.gameObject.renderer.material.mainTexture = altButton0.hover;};
+			if (button == 0){altButton0.onRaycastHit();};
+			if (button == 1){altButton1.onRaycastHit();};
 		};
 	};
 	// Initiate yet another mess of conditional statements to activate the effects of the button
@@ -151,19 +137,15 @@ function Update () {
 				button4.gameObject.renderer.material.mainTexture = button4.pressed;
 				button4.Action();
 			};
-			if (button == 5){
-				button5.gameObject.renderer.material.mainTexture = button5.pressed;
-				button5.Action();
-			};
-			if (button == 6){
-				button6.gameObject.renderer.material.mainTexture = button6.pressed;
-				button6.Action();
-			};
 		};
 		if (alt == true){
 			if (button == 0){
 				altButton0.gameObject.renderer.material.mainTexture = altButton0.pressed;
 				altButton0.Action();
+			};
+			if (button == 1){
+				altButton0.gameObject.renderer.material.mainTexture = altButton0.pressed;
+				altButton1.Action();
 			};
 		};
 	}
@@ -177,11 +159,11 @@ function Update () {
 
 function Clear (){
 	// This function resets all textures
-	if( button1.disabled == false ) { button1.gameObject.renderer.material.mainTexture = button1.normal; };
-	if( button2.disabled == false ) { button2.gameObject.renderer.material.mainTexture = button2.normal; };
-	if( button3.disabled == false ) { button3.gameObject.renderer.material.mainTexture = button3.normal; };
-	if( button4.disabled == false ) { button4.gameObject.renderer.material.mainTexture = button4.normal; };
-	button5.gameObject.renderer.material.mainTexture = button5.normal;
-	button6.gameObject.renderer.material.mainTexture = button6.normal;
-	altButton0.gameObject.renderer.material.mainTexture = altButton0.normal;
+	if (button1 != null){ button1.gameObject.renderer.material.mainTexture = button1.normal; };
+	if (button2 != null){ button2.gameObject.renderer.material.mainTexture = button2.normal; };
+	if (button3 != null){ button3.gameObject.renderer.material.mainTexture = button3.normal; };
+	if (button4 != null){ button4.gameObject.renderer.material.mainTexture = button4.normal; };
+	// Now for the alt buttons
+	if (altButton0 != null){ altButton0.gameObject.renderer.material.mainTexture = altButton0.normal; };
+	if (altButton1 != null){ altButton1.gameObject.renderer.material.mainTexture = altButton1.normal; };
 }

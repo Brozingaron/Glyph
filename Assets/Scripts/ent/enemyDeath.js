@@ -17,27 +17,27 @@ function Update () {
 		// Calculate the distance between the player & this enemy
 		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
 		// What should happen to the enemy depending on its distance
-		if (distance <= 15 ){
-			health -= 20 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 15) * (distance / 15) + 0.5 ),1.5,"easeOutQuint");
+		if (distance <= 25 ){
+			health -= 25 / distance - 1;
+			push(Mathf.Abs(-1 * (distance / 25) * (distance / 25) + 0.5 ),1.5,"easeOutQuint");
 		};
 	};
 	if ( Input.GetButtonDown("ability2") && GameObject.Find("gameMan").GetComponent(gameManager).charge >= .50 ){
 		// Calculate the distance between the player & this enemy
 		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
 		// What should happen to the enemy depending on its distance
-		if (distance <= 25 ){
-			health -= 25 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 25) * (distance / 25) + 1 ),2,"easeOutQuint");
+		if (distance <= 35 ){
+			health -= 35 / distance - 1;
+			push(Mathf.Abs(-1 * (distance / 35) * (distance / 35) + 1 ),2,"easeOutQuint");
 		};
 	};
 	if ( Input.GetButtonDown("ability3") && GameObject.Find("gameMan").GetComponent(gameManager).charge >= .75 ){
 		// Calculate the distance between the player & this enemy
 		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
 		// What should happen to the enemy depending on its distance
-		if (distance <= 45 ){
-			health -= 45 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 45) * (distance / 45) + 1 ),5,"easeOutQuint");
+		if (distance <= 50 ){
+			health -= 50 / distance - 1;
+			push(Mathf.Abs(-1 * (distance / 50) * (distance / 50) + 1 ),5,"easeOutQuint");
 		};
 	};
 	
@@ -52,6 +52,7 @@ function Update () {
 
 function push (amount : float,speed:float, easeType : String){
 	// This function calls another function depending on the movement script
+	// It is directly responsible for enemies moving backwards
 	if (gameObject.GetComponent(linearFollow) != null){
 		gameObject.GetComponent(linearFollow).push(amount,speed,easeType);
 	}

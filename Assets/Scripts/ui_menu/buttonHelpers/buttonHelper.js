@@ -112,18 +112,18 @@ function Update () {
 		raySpammer.on = false; //Disable the ray spammer
 		Clear();
 		if (alt == false){
-			if (button == 1){button1.gameObject.renderer.material.mainTexture = button1.hover;};
-			if (button == 2){button2.gameObject.renderer.material.mainTexture = button2.hover;};
-			if (button == 3){button3.gameObject.renderer.material.mainTexture = button3.hover;};
-			if (button == 4){button4.gameObject.renderer.material.mainTexture = button4.hover;};
-			if (button == 5){button5.gameObject.renderer.material.mainTexture = button5.hover;};
+			if (button == 1){button1.onRaycastHit();};
+			if (button == 2){button2.onRaycastHit();};
+			if (button == 3){button3.onRaycastHit();};
+			if (button == 4){button4.onRaycastHit();};
+			if (button == 5){button5.onRaycastHit();};
 		}
 		else{
-			if (button == 0){altButton0.gameObject.renderer.material.mainTexture = altButton0.hover;};
-			if (button == 1){altButton1.gameObject.renderer.material.mainTexture = altButton1.hover;};
-			if (button == 2){altButton2.gameObject.renderer.material.mainTexture = altButton2.hover;};
-			if (button == 3){altButton3.gameObject.renderer.material.mainTexture = altButton3.hover;};
-			if (button == 4){altButton4.gameObject.renderer.material.mainTexture = altButton4.hover;};
+			if (button == 0){altButton0.onRaycastHit();};
+			if (button == 1){altButton1.onRaycastHit();};
+			if (button == 2){altButton2.onRaycastHit();};
+			if (button == 3){altButton3.onRaycastHit();};
+			if (button == 4){altButton4.onRaycastHit();};
 		};
 	};
 	// Initiate yet another mess of conditional statements to activate the effects of the button

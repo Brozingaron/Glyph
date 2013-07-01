@@ -56,16 +56,6 @@
      <Compile Include="Assets\Scripts\managers\musicManager.js" />
      <Compile Include="Assets\Scripts\managers\preferenceManager.js" />
      <Compile Include="Assets\Scripts\managers\sceneManager.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\button.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\buttonHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\graphicsHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\settingsHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\controlSlider.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\minimalParticles.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\resolutionary.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\sound.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\vSync.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\videoSlider.js" />
      <Compile Include="Assets\Scripts\ui\dev\fps.js" />
      <Compile Include="Assets\Scripts\ui\effects\backgroundRotate.js" />
      <Compile Include="Assets\Scripts\ui\effects\fancyBackground.js" />
@@ -83,8 +73,18 @@
      <Compile Include="Assets\Scripts\ui\ingame\scoreAnim.js" />
      <Compile Include="Assets\Scripts\ui\persistance.js" />
      <Compile Include="Assets\Scripts\ui\raySpam.js" />
-     <Compile Include="Assets\Scripts\ui\splashText.js" />
      <Compile Include="Assets\Scripts\ui\textScale.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\buttonHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\graphicsHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\settingsHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\button.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\controlSlider.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\minimalParticles.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\resolutionary.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\sound.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\vSync.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\videoSlider.js" />
+     <Compile Include="Assets\Scripts\ui_menu\splashText.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">

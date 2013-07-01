@@ -15,6 +15,7 @@ var comboTimer : float = 0.0; // The duration of this combo
 var maxComboTimer : float = 5.0; // Limit the duration of a combo
 var charge : float = 0.0; // The current charge of the ability bar
 var timeAlive : float = 0.0; // The duration of this round
+var lives : int = 3; // The number of lives the player has
 // Charge Rates
 private var chargeRate : float = 75.0; // Current Charge Rate as calculated by the game
 var chargeRate1 : float = 5.0; // Ability 1
@@ -40,12 +41,14 @@ var nukeMinimalParticle : GameObject;
 // Define a few in-game objects
 private var scoreObj : GUIText;
 private var multObj : GUIText;
+private var lifeObj : GUIText;
 private var player : GameObject;
 
 function Start () {
-	// Find the Score & Multiplier
+	// Find the Score, Multiplier & Lives
 	scoreObj = GameObject.Find("score").guiText;
 	multObj = GameObject.Find("multiplier").guiText;
+	lifeObj = GameObject.Find("LifeCounter").guiText;
 	// Find the player
 	player = GameObject.Find("Soul");
 	
@@ -125,6 +128,14 @@ function Update () {
 	// Update the scoreboard
 	scoreObj.text = "" + score;
 	multObj.text = "x" + multiplier;
+	
+	// Update the life counter
+	if( dead == false){
+		lifeObj.text = "x" + lives;
+	}
+	else{
+		lifeObj.text = "";
+	}
 }
 
 function consumeTween (newVal : float){
@@ -142,4 +153,25 @@ function killed (){
 		multiplier += 1;
 	};
 	score += 1 * multiplier;
+}
+
+function die (){
+	// Call this function when the player dies or loses a life
+	lives -= 1;
+	if ( lives < 0 ){
+		player.GetComponent(death).fatal();
+		lives = 0;
+		dead = true;
+		// Set highscores
+		if ( Application.loadedLevel == 6 && PlayerPrefs.GetInt("arcadeHS") < score ){
+			PlayerPrefs.SetInt("arcadeHS",score);
+		};
+		if ( Application.loadedLevel == 7 && PlayerPrefs.GetInt("insaneHS") < score ){
+			PlayerPrefs.SetInt("insaneHS",score);
+		};
+	}
+	else{
+		player.GetComponent(death).damaged();
+	};
+	
 }

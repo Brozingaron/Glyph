@@ -1,7 +1,7 @@
 #pragma strict
 
 // This script is for all entities that move towards the player in a straight line
-// It also deals with animation delays and hiding the score bar for enemies
+// It also deals with hiding the score bar for enemies
 
 var lethal : boolean = false; //Don't kill the player... Yet.
 var t : float = 0.0;
