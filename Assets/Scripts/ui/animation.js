@@ -31,5 +31,5 @@ function Update () {
 function OnDisable () {
 	// Unload ALL the textures
 	// But seriously, free around 50 MB of RAM for every second @ 30 FPS
-	EditorUtility.UnloadUnusedAssets();
+	Resources.UnloadUnusedAssets();
 }
