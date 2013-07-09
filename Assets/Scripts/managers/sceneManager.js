@@ -53,7 +53,9 @@ function change () {
 	GameObject.Find("Main Camera").GetComponent(raySpam).Deactivate();
 	
 	//Animate ALL the things
-	iTween.ColorTo(GameObject.Find("Background Color"),{"Color":Color(0,.373,.753),"time":.2}); //Reset the background color to its default
+	if (GameObject.Find("Background Color") !== null){
+		iTween.ColorTo(GameObject.Find("Background Color"),{"Color":Color(0,.373,.753),"time":.2}); //Reset the background color to its default
+	};
 	if (GameObject.FindWithTag("zoom") != null ){ //Only animate if a tag exists
 		// Zoom animation scale to 10x original object's size
 		iTween.ScaleTo(GameObject.FindWithTag("zoom"),{"x":GameObject.FindWithTag("zoom").transform.localScale.x * 10,"y":GameObject.FindWithTag("zoom").transform.localScale.y * 10,"easetype":"easeOutSine","time":1});

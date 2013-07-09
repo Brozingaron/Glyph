@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\managers\gameManager.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ui\makingLevelDetails.js">
     <Files>
-      <File FileName="Assets\Scripts\managers\preferenceManager.js" Line="21" Column="36" />
-      <File FileName="Assets\Scripts\managers\gameManager.js" Line="169" Column="66" />
+      <File FileName="Assets\Scripts\ui\makingLevelDetails.js" Line="75" Column="60" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

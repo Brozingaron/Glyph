@@ -13,9 +13,6 @@ function Start () {
 	// Define ALL the splash texts
 	splashes = [
 		// Generic
-		"Magikarp used splash text!",
-		"Insanity. Not even once.",
-		"No. Insane mode is not broken.",
 		"Nouns!",
 		"Science!",
 		"Try using Z, X, and C!",
