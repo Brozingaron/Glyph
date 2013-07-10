@@ -5,6 +5,9 @@
 // Define songs
 var menuSong : AudioClip;
 var arcadeSong : AudioClip;
+var insaneSong : AudioClip;
+var workingSong : AudioClip;
+var endlessSong : AudioClip;
 private var newSong : AudioClip; // used in crossfading songs
 
 function Start () {
@@ -14,29 +17,48 @@ function Start () {
 
 function OnLevelWasLoaded () {
 	// Update which song is playing
+	if (Application.loadedLevel == 0){
+		audio.mute = true;
+	};
 	if (Application.loadedLevel == 1 || Application.loadedLevel == 2 || Application.loadedLevel == 3 || Application.loadedLevel == 4 || Application.loadedLevel == 5){
-		// Unmute the audio source
-		audio.mute = false;
 		// If the song is already playing, don't reset it
 		if (audio.clip !== menuSong){
-			crossFade();
-			newSong = menuSong;
-			Invoke("changeSong",0.5);
+			change(menuSong);
 		}
 		else{
 			fade(1);
 		};
 	};
-	if (Application.loadedLevel == 6 || Application.loadedLevel == 7){
-		// Do the same as before, but for the arcade song
-		audio.mute = false;
-		// Restart the song even if it's playing
-		crossFade();
-		newSong = arcadeSong;
-		Invoke("changeSong",0.5);
+	if (Application.loadedLevel == 6){
+		// Arcade
+		change(arcadeSong);
 	};
+	if (Application.loadedLevel == 7){
+		// Insane Mode
+		change(insaneSong);
+	};
+	if (Application.loadedLevel == 8){
+		// Endless Mode
+		// This plays the loading song to give time to generate the level
+		change(workingSong);
+	};
+	if (PlayerPrefs.GetInt("muted") == 0){
+		audio.mute = false;
+	}
+	else{
+		audio.mute = true;
+	}
+}
+
+function change (song : AudioClip) {
+	// Call this function to change the song
+	audio.mute = false;
+	crossFade();
+	newSong = song;
+	Invoke("changeSong",0.5);
+	
 	// Don't play if muted
-	if (Application.loadedLevel == 0 || PlayerPrefs.GetInt("muted") == 1){
+	if ( PlayerPrefs.GetInt("muted") == 1){
 		audio.mute = true;
 	};
 }

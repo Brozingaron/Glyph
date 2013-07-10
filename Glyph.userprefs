@@ -1,8 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ui\animation.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ui_menu\buttons\button.js">
     <Files>
-      <File FileName="Assets\Scripts\ui\animation.js" Line="34" Column="11" />
+      <File FileName="Assets\Scripts\ui_menu\buttons\button.js" Line="22" Column="79" />
+      <File FileName="Assets\Scripts\ui_menu\buttons\sound.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\managers\gameManager.js" Line="173" Column="31" />
+      <File FileName="Assets\Scripts\ui_menu\buttonHelpers\buttonHelper.js" Line="199" Column="50" />
+      <File FileName="Assets\Scripts\arcadeEnt\linearFollow.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

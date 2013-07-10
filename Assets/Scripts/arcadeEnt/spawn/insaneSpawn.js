@@ -9,7 +9,7 @@ var fountain : GameObject;
 private var gameMan : gameManager;
 
 // Define spawning variables
-var spawnRate : float = 2; // seconds per enemy spawn
+var spawnRate : float = 0.5; // seconds per enemy spawn
 var spawnRateRandPercent : float = .20; //Percent of how random the spawning should be
 var progressionRate : float = 0.05; // How many more enemies per second to spawn
 private var spawnStage : int = 0; // See spawning stages in the Update function
@@ -33,9 +33,9 @@ function Start () {
 
 function Update () {
 	spawnRate = spawnRate - progressionRate * Time.deltaTime * gameMan.timeScale; // Make more enemies spawn over time
-	if ( spawnRate <= 0.5 ){
+	if ( spawnRate <= 0.1 ){
 		// Tame the spawning while still increasing difficulty
-		spawnRate = 2;
+		spawnRate = 0.5;
 		spawnStage += 1;
 	}
 	// Spawn Fountains
@@ -46,11 +46,9 @@ function Update () {
 	if ( t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate || t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate){
 		//Figure out if a new entity should be spawned with some variation between spawn times
 		if ( spawnStage == 1 || spawnStage == 0){
-			// During the first spawn stage, spawn 1 enemy at a time in a random place
 			spawnSquare();
 		};
 		if ( spawnStage == 2){
-			// Spawn enemies in groups of 2 during the second stage
 			spawnSquare();
 			spawnSquare();
 		};
@@ -60,6 +58,7 @@ function Update () {
 			spawnSquare();
 			spawnSquare();
 		};
+		t = 0;
 	}
 }
 //

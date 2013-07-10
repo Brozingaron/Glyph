@@ -169,6 +169,9 @@ function die (){
 		if ( Application.loadedLevel == 7 && PlayerPrefs.GetInt("insaneHS") < score ){
 			PlayerPrefs.SetInt("insaneHS",score);
 		};
+		if ( Application.loadedLevel == 8 && PlayerPrefs.GetInt("endlessHS") < score ){
+			PlayerPrefs.SetInt("endlessHS",score);
+		};
 	}
 	else{
 		player.GetComponent(death).damaged();

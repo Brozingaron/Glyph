@@ -33,12 +33,13 @@ private var sphereCollider : GameObject;
 private var done : boolean = true; // If this room's generation is done
 private var valid : boolean = false; // If this room's coordinates are valid
 
+// The animated logo's gameObject so we can destroy it when we're done
+var progressAnimation : GameObject;
+
 function Start () {
 	z = gameObject.transform.position.z;
 	// Pick a random number of rooms
-	roomCount = Random.Range(20,40);
-	
-	Debug.Log("mapManager: " + roomCount + " rooms will be generated");
+	roomCount = Random.Range(30,50);
 	
 	// What theme should we use?
 	// Get the interior designers to figure this out and switch the prefabs
@@ -47,16 +48,26 @@ function Start () {
 		wall = stoneWall;
 		floorTex = stoneFloor;
 	};
+	
+	// Wait for the map generation to finish before showing GUI text
+	GameObject.Find("count down").GetComponent(countDown).enabled = false;
+	GameObject.Find("count down").GetComponent(GUIText).enabled = false;
+	GameObject.Find("score").GetComponent(scoreAnim).enabled = false;
+	GameObject.Find("score").GetComponent(GUIText).enabled = false;
+	GameObject.Find("multiplier").GetComponent(scoreAnim).enabled = false;
+	GameObject.Find("multiplier").GetComponent(GUIText).enabled = false;
+	GameObject.Find("LifeCounter").GetComponent(scoreAnim).enabled = false;
+	GameObject.Find("LifeCounter").GetComponent(GUIText).enabled = false;
 }
 
 function Update () {
 	// Should another room be generated?
-	if ( done == true && valid == false && roomsGenerated < roomCount){
+	if ( done == true && valid == false && roomsGenerated <= roomCount){
 		// Generate random coordinates for this room
 		w = Random.Range(4,10); // Get random width
 		h = Random.Range(4,10); // Get random height
-		x = Random.Range(-40,40); // Get random X
-		y = Random.Range(-40,40); // Get random Y
+		x = Random.Range(-20,20); // Get random X
+		y = Random.Range(-20,20); // Get random Y
 		
 		// If this is the first room, put it at the origin
 		if ( roomsGenerated == 0 ){
@@ -64,22 +75,9 @@ function Update () {
 			y = 0;
 		};
 		
-		Debug.Log("mapManager: Picked (" + w + "," + h + "," + x + "," + y + ") as room coordinates");
-		
 		valid = true;
 		done = false;
 		
-		/*
-		// Check these values to make sure rooms don't intersect
-		sphereCollider = Physics.OverlapSphere( Vector3(lastRoomDimensions[1] / 2 + lastRoomDimensions[ // Words
-		if ( sphereCollider.name = "floor" || sphereCollider == null ){
-			// This process happens 4 times for all corners
-			...
-						valid = true;
-			// Ain't nobody got time for that
-			
-		};
-	*/
 	};
 	
 	// If a room is good, make it
@@ -168,10 +166,28 @@ function Update () {
 	// Reset the pending room and start again.
 	// Fun times.
 	if ( done == true && valid == true){
-		//valid = false;
+		valid = false;
 		w = h = x = y = wallTopGenerated = wallBottomGenerated = wallLeftGenerated = wallRightGenerated = 0;
 		roomsGenerated += 1;
 		
 		//Debug.Log("Room generated. Starting again.");
+	};
+	
+	if ( roomsGenerated >= roomCount ){
+		// When all of the rooms have been generated, we're done here
+		Destroy(this);
+		iTween.ColorTo(progressAnimation,{"a":0,"time":0.2});
+		GameObject.Find("Music(Clone)").GetComponent(musicManager).change(GameObject.Find("Music(Clone)").GetComponent(musicManager).endlessSong);
+		Destroy(progressAnimation,0.2);
+		
+		// Reenable the GUI text
+		GameObject.Find("count down").GetComponent(countDown).enabled = true;
+		GameObject.Find("count down").GetComponent(GUIText).enabled = true;
+		GameObject.Find("score").GetComponent(scoreAnim).enabled = true;
+		GameObject.Find("score").GetComponent(GUIText).enabled = true;
+		GameObject.Find("multiplier").GetComponent(scoreAnim).enabled = true;
+		GameObject.Find("multiplier").GetComponent(GUIText).enabled = true;
+		GameObject.Find("LifeCounter").GetComponent(scoreAnim).enabled = true;
+		GameObject.Find("LifeCounter").GetComponent(GUIText).enabled = true;
 	};
 }

@@ -194,4 +194,8 @@ function Clear (){
 	if (altButton2 != null){ altButton2.gameObject.renderer.material.mainTexture = altButton2.normal; };
 	if (altButton3 != null){ altButton3.gameObject.renderer.material.mainTexture = altButton3.normal; };
 	if (altButton4 != null){ altButton4.gameObject.renderer.material.mainTexture = altButton4.normal; };
+	
+	if (Application.loadedLevel == 1){
+		GameObject.Find("Highscore").guiText.text = "";
+	}
 }

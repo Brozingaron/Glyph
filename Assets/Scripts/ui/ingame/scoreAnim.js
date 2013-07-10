@@ -4,7 +4,7 @@
 
 private var sceneMan : sceneManager;
 
-function Start () {
+function Awake () {
 	// Animate the text size
 	iTween.ValueTo(gameObject,{"from":0,"to":gameObject.guiText.fontSize,"easetype":"easeOutElastic","Time":1,"onupdate":"tweenSize","onupdateparams":"float","delay":1.5});
 	iTween.MoveFrom(gameObject,{"y":2,"time":0,"delay":1.5});

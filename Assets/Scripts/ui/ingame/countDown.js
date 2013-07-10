@@ -18,12 +18,17 @@ function Start (){
 	// Put the game to sleep
 	if( Application.loadedLevel == 6 ){field.GetComponent(arcadeSpawn).enabled = false;};
 	if( Application.loadedLevel == 7 ){field.GetComponent(insaneSpawn).enabled = false;};
-	player.GetComponent(mouseAttatch).enabled = false;
+	if( player.GetComponent(mouseAttatch) != null){player.GetComponent(mouseAttatch).enabled = false;};
+	if( player.GetComponent(wasdMove) != null){player.GetComponent(wasdMove).enabled = false;};
 	
 	// Animate in the player
 	iTween.ScaleFrom(playerSprite,{"x":0,"y":0,"z":0,"easetype":"easeOutElastic","time":1,"delay":1});
 	
 	transform.position.y = 2; // Move the countdown offscreen until it's at 3
+}
+
+function Activate () {
+	Start();
 }
 
 function Update () {
@@ -41,7 +46,8 @@ function Update () {
 		transform.position.y = 2;
 		if( Application.loadedLevel == 6 ){field.GetComponent(arcadeSpawn).enabled = true;};
 		if( Application.loadedLevel == 7 ){field.GetComponent(insaneSpawn).enabled = true;};
-		player.GetComponent(mouseAttatch).enabled = true;
+		if( player.GetComponent(mouseAttatch) != null){player.GetComponent(mouseAttatch).enabled = true;};
+		if( player.GetComponent(wasdMove) != null){player.GetComponent(wasdMove).enabled = true;};
 		gameMgr.GetComponent(gameManager).timeAlive = 0.0;
 		Destroy(gameObject);
 	};

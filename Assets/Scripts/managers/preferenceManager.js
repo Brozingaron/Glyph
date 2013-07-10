@@ -20,4 +20,7 @@ function Start () {
 	if( PlayerPrefs.GetInt("insaneHS") == null){
 		PlayerPrefs.SetInt("insaneHS",0);
 	};
+	if( PlayerPrefs.GetInt("endlessHS") == null){
+		PlayerPrefs.SetInt("endlessHS",0);
+	};
 }

@@ -5,6 +5,7 @@
 
 var sceneToSelf : boolean = true;
 var sceneTo : int = 0;
+var gameMode : boolean = false; // If this button is a game mode on the main menu
 
 // Define a few textures for the button
 var pressed : Texture2D;
@@ -15,11 +16,24 @@ private var revert : int = 0; // Deals with changing the texture back when not h
 function Update () {
 	// Revert button texture if needed
 	if (gameObject.renderer.material.mainTexture == hover){
-		// If the mouse has been moved...
+		// If this button is being hovered...
+		if ( gameMode == true ){
+			// And this is a game mode button, update the highscore hint
+			GameObject.Find("Highscore").guiText.text = "<color=#ffffffb0><b>Highscore:</b></color> ";
+			// Figure out which highscore to show
+			if ( sceneTo == 6 ){ GameObject.Find("Highscore").guiText.text += PlayerPrefs.GetInt("arcadeHS");};
+			if ( sceneTo == 7 ){ GameObject.Find("Highscore").guiText.text += PlayerPrefs.GetInt("insaneHS");};
+			if ( sceneTo == 8 ){ GameObject.Find("Highscore").guiText.text += PlayerPrefs.GetInt("endlessHS");};
+		}
+		// And if the mouse has been moved...
 		if ( Input.GetAxis("Mouse X") != 0 && Input.GetAxis("Mouse Y") != 0){
 			// ... And if the GameObject hasn't been hit with a ray since the last frame update, revert its texture
 			if (revert == 1 ){ 
 				gameObject.renderer.material.mainTexture = normal;
+				if ( gameMode == true ){
+					// Hide the score if this is a game mode
+					GameObject.Find("Highscore").guiText.text = "";
+				};
 			};
 			/// ... Add to the timer
 			revert = 1; // Frames since not been hit by a ray
