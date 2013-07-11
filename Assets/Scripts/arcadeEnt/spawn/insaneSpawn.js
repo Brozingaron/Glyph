@@ -6,6 +6,7 @@
 // Define the prefabs for the objects that spawn
 var square : GameObject;
 var fountain : GameObject;
+var bossSpawn : GameObject;
 private var gameMan : gameManager;
 
 // Define spawning variables
@@ -32,34 +33,50 @@ function Start () {
 }
 
 function Update () {
-	spawnRate = spawnRate - progressionRate * Time.deltaTime * gameMan.timeScale; // Make more enemies spawn over time
-	if ( spawnRate <= 0.1 ){
-		// Tame the spawning while still increasing difficulty
-		spawnRate = 0.5;
-		spawnStage += 1;
+	if ( GameObject.FindGameObjectsWithTag("enemy").Length >= 50 && GameObject.Find("bossSpawn(Clone)") == null ){
+		// If there are 50+ enemies, spawn a boss
+		lastSpawn = Instantiate(bossSpawn, Vector3.zero, Quaternion.Euler(0,0,0));
+		// Parent the spawner to the field
+		lastSpawn.transform.parent = gameObject.transform;
 	}
-	// Spawn Fountains
-	if (GameObject.Find("Fountain") == null && GameObject.Find("Fountain(Clone)") == null){
-		Instantiate(fountain,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),-10),Quaternion.Euler(0,0,0));
+	// If the game isn't paused and there isn't a boss spawner...
+	if (gameMan.timeScale != 0 && GameObject.Find("bossSpawn(Clone)") == null){
+		// Don't make the game harder if there are no more spawn stages
+		if ( spawnRate > 0.1 && spawnStage < 3){
+			spawnRate = spawnRate - progressionRate * Time.deltaTime * gameMan.timeScale; // Make more enemies spawn over time
+		};
+		if ( spawnRate <= 0.1 && spawnStage < 3 ){
+			// Tame the spawning while still increasing difficulty
+			spawnRate = 0.5;
+			spawnStage += 1;
+		}
+		// Spawn Fountains
+		if (GameObject.Find("Fountain") == null && GameObject.Find("Fountain(Clone)") == null){
+			Instantiate(fountain,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),-10),Quaternion.Euler(0,0,0));
+		};
+		t += Time.deltaTime * gameMan.timeScale;
+		if ( t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate || t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate){
+			//Figure out if a new entity should be spawned with some variation between spawn times
+			
+			if ( spawnStage == 1 || spawnStage == 0){
+				// During the first spawn stage, spawn 1 enemy at a time in a random place
+				spawnSquare();
+			};
+			if ( spawnStage == 2){
+				// Spawn enemies in groups of 2 during the second stage
+				spawnSquare();
+				spawnSquare();
+			};
+			if ( spawnStage == 3){
+				// Now spawn 4 enemies for the rest
+				spawnSquare();
+				spawnSquare();
+				spawnSquare();
+				spawnSquare();
+			};
+		t = 0; // Reset the timer
+		};
 	};
-	t += Time.deltaTime * gameMan.timeScale;
-	if ( t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate || t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate){
-		//Figure out if a new entity should be spawned with some variation between spawn times
-		if ( spawnStage == 1 || spawnStage == 0){
-			spawnSquare();
-		};
-		if ( spawnStage == 2){
-			spawnSquare();
-			spawnSquare();
-		};
-		if ( spawnStage == 3){
-			spawnSquare();
-			spawnSquare();
-			spawnSquare();
-			spawnSquare();
-		};
-		t = 0;
-	}
 }
 //
 // Enemy spawn functions

@@ -44,14 +44,17 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\arcadeEnt\bossSpawner.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\death.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\enemyDeath.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\enemyTransform.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\fountainDespawn.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\linearFollow.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\mouseAttatch.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\scoreHide.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\spawn\arcadeSpawn.js" />
      <Compile Include="Assets\Scripts\arcadeEnt\spawn\insaneSpawn.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\trapezoidBoss.js" />
      <Compile Include="Assets\Scripts\classicEnt\mouseAttatchClassic.js" />
      <Compile Include="Assets\Scripts\classicEnt\wasdMove.js" />
      <Compile Include="Assets\Scripts\managers\gameManager.js" />

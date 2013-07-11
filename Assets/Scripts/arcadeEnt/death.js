@@ -10,6 +10,7 @@ var Death : GameObject;
 var gameMan : gameManager;
 
 var deathSound : AudioClip;
+var lifeLostSound : AudioClip;
 
 var god : boolean = false; // For INTERNAL TESTING ONLY
 private var dead : boolean = false;
@@ -17,14 +18,22 @@ private var dead : boolean = false;
 function OnCollisionStay(touch : Collision) {
 	//If a collision is detected between another rigidbody object and the player isn't invincible as indicated by transparency...
 	if ( spriteObject.renderer.material.color.a == 1.0 ){
-		if ( touch.gameObject.GetComponent(linearFollow) != null && touch.gameObject.GetComponent(linearFollow).lethal == true ){
-			//See if it's lethal. If yes, kill it and the player
-			touch.gameObject.GetComponent(enemyDeath).suicide();
-			gameMan.die();
+		if ( touch.gameObject.GetComponent(linearFollow) != null ){
+			if ( touch.gameObject.GetComponent(linearFollow).lethal == true ){
+				//See if it's lethal. If yes, kill it and the player
+				touch.gameObject.GetComponent(enemyDeath).suicide();
+				gameMan.die();
+			};
+		};
+		if ( touch.gameObject.GetComponent(trapezoidBoss) != null ) {
+			if ( touch.gameObject.GetComponent(trapezoidBoss).lethal == true ){
+				//See if it's lethal. If yes, kill the player
+				gameMan.die();
+			};
 		};
 	}
 	else{
-		if ( touch.gameObject.GetComponent(enemyDeath) != null){
+		if ( touch.gameObject.GetComponent(enemyDeath) != null && touch.gameObject.GetComponent(trapezoidBoss) == null){
 			touch.gameObject.GetComponent(enemyDeath).suicide();
 		};
 	};
@@ -38,6 +47,8 @@ function damaged () {
 	iTween.FadeTo(spriteObject,{"alpha":.50,"time":0.1,"delay":0.2});
 	iTween.FadeTo(spriteObject,{"alpha":.25,"time":0.1,"delay":0.3});
 	iTween.FadeTo(spriteObject,{"alpha":1.0,"time":0.2,"delay":0.4});
+	// Play the life lost sound
+	audio.PlayOneShot(lifeLostSound);
 }
 
 function fatal () {

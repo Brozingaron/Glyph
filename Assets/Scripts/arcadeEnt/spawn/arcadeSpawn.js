@@ -6,6 +6,7 @@
 // Define the prefabs for the objects that spawn
 var square : GameObject;
 var fountain : GameObject;
+var bossSpawn : GameObject;
 private var gameMan : gameManager;
 
 // Define spawning variables
@@ -33,8 +34,14 @@ function Start () {
 }
 
 function Update () {
-	// If the game isn't paused...
-	if (gameMan.timeScale != 0){
+	if ( GameObject.FindGameObjectsWithTag("enemy").Length >= 50 && GameObject.Find("bossSpawn(Clone)") == null ){
+		// If there are 50+ enemies, spawn a boss
+		lastSpawn = Instantiate(bossSpawn, Vector3.zero, Quaternion.Euler(0,0,0));
+		// Parent the spawner to the field
+		lastSpawn.transform.parent = gameObject.transform;
+	}
+	// If the game isn't paused and there isn't a boss spawner...
+	if (gameMan.timeScale != 0 && GameObject.Find("bossSpawn(Clone)") == null){
 		// Don't make the game harder if there are no more spawn stages
 		if ( spawnRate > 0.5 && spawnStage < 3){
 			spawnRate = spawnRate - progressionRate * Time.deltaTime * gameMan.timeScale; // Make more enemies spawn over time

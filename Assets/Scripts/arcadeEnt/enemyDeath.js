@@ -6,6 +6,7 @@
 var spriteObject : GameObject; // The mesh's sprite (for animating)
 
 var health : float = 1; // Allows partial damage to enemies
+var pointValue : int = 1; // How many points this enemy is worth
 
 private var distance : float; // Distance from the player to this enemy. Used in damage calculation
 private var dead : boolean = false; // If this enemy is dead
@@ -45,7 +46,7 @@ function Update () {
 		// If health is less than or equal to 0, die and inform the gameManager that
 		// there has been another casualty
 		dead = true; // Don't die again
-		GameObject.Find("gameMan").GetComponent(gameManager).killed();
+		GameObject.Find("gameMan").GetComponent(gameManager).killed(pointValue);
 		die();
 	}
 }
@@ -62,6 +63,9 @@ function die () {
 	// Destroy the movement script
 	if (GetComponent(linearFollow) != null){
 		Destroy(GetComponent(linearFollow));
+	};
+	if (GetComponent(trapezoidBoss) != null){
+		Destroy(GetComponent(trapezoidBoss));
 	};
 	// Disable the particle system
 	transform.FindChild("Trail").particleSystem.Stop();

@@ -142,7 +142,7 @@ function consumeTween (newVal : float){
 	charge = newVal;
 }
 
-function killed (){
+function killed (pointValue : int){
 	// Don't change the score directly. Fancy math is used
 	// Call this function whenever an entity is killed
 	killedCount += 1;
@@ -152,7 +152,7 @@ function killed (){
 	else{
 		multiplier += 1;
 	};
-	score += 1 * multiplier;
+	score += pointValue * multiplier;
 }
 
 function die (){
