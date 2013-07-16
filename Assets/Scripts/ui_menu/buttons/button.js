@@ -35,7 +35,7 @@ function Update () {
 					GameObject.Find("Highscore").guiText.text = "";
 				};
 			};
-			/// ... Add to the timer
+			// ... Add to the timer
 			revert = 1; // Frames since not been hit by a ray
 		};
 	};

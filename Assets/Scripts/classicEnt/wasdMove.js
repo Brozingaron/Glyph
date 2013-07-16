@@ -23,16 +23,16 @@ function Update () {
 		transformVector = Vector3(0,0,0);
 		
 		// Add to the transform vector
-		if(Input.GetButton("up")){
+		if(Input.GetKey(PlayerPrefs.GetString("upKey")) || Input.GetKey(PlayerPrefs.GetString("upKeyAlt"))){
 			transformVector += Vector3(0,1,0);
 		};
-		if(Input.GetButton("down")){
+		if(Input.GetKey(PlayerPrefs.GetString("downKey")) || Input.GetKey(PlayerPrefs.GetString("downKeyAlt"))){
 			transformVector += Vector3(0,-1,0);
 		};
-		if(Input.GetButton("left")){
+		if(Input.GetKey(PlayerPrefs.GetString("leftKey")) || Input.GetKey(PlayerPrefs.GetString("leftKeyAlt"))){
 			transformVector += Vector3(1,0,0);
 		};
-		if(Input.GetButton("right")){
+		if(Input.GetKey(PlayerPrefs.GetString("rightKey")) || Input.GetKey(PlayerPrefs.GetString("rightKeyAlt"))){
 			transformVector += Vector3(-1,0,0);
 		};
 		

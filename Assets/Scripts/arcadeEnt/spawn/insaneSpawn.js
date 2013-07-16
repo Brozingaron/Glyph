@@ -39,8 +39,14 @@ function Update () {
 		// Parent the spawner to the field
 		lastSpawn.transform.parent = gameObject.transform;
 	}
-	// If the game isn't paused and there isn't a boss spawner...
-	if (gameMan.timeScale != 0 && GameObject.Find("bossSpawn(Clone)") == null){
+	
+	// Spawn Fountains
+	if (GameObject.Find("Fountain") == null && GameObject.Find("Fountain(Clone)") == null){
+		Instantiate(fountain,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),-10),Quaternion.Euler(0,0,0));
+	};
+	
+	// If the game isn't paused and there isn't a boss spawner or boss...
+	if (gameMan.timeScale != 0 && GameObject.Find("bossSpawn(Clone)") == null && GameObject.Find("Trapezoid of Doom(Clone)") == null){
 		// Don't make the game harder if there are no more spawn stages
 		if ( spawnRate > 0.1 && spawnStage < 3){
 			spawnRate = spawnRate - progressionRate * Time.deltaTime * gameMan.timeScale; // Make more enemies spawn over time
@@ -50,39 +56,42 @@ function Update () {
 			spawnRate = 0.5;
 			spawnStage += 1;
 		}
-		// Spawn Fountains
-		if (GameObject.Find("Fountain") == null && GameObject.Find("Fountain(Clone)") == null){
-			Instantiate(fountain,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),-10),Quaternion.Euler(0,0,0));
-		};
 		t += Time.deltaTime * gameMan.timeScale;
 		if ( t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate || t >= spawnRate + Random.Range(0,spawnRateRandPercent) * spawnRate){
 			//Figure out if a new entity should be spawned with some variation between spawn times
 			
 			if ( spawnStage == 1 || spawnStage == 0){
 				// During the first spawn stage, spawn 1 enemy at a time in a random place
-				spawnSquare();
+				spawnSquare(1);
 			};
 			if ( spawnStage == 2){
 				// Spawn enemies in groups of 2 during the second stage
-				spawnSquare();
-				spawnSquare();
+				spawnSquare(2);
 			};
 			if ( spawnStage == 3){
 				// Now spawn 4 enemies for the rest
-				spawnSquare();
-				spawnSquare();
-				spawnSquare();
-				spawnSquare();
+				spawnSquare(4);
 			};
 		t = 0; // Reset the timer
 		};
+	};
+	
+	// If there is a boss, continue to spawn enemies, but do it slower
+	if ( GameObject.Find("Trapezoid of Doom(Clone)") != null ){
+		t += Time.deltaTime * gameMan.timeScale;
+		if ( t >= 1 ){
+			spawnSquare(1);
+		};
+		t = 0; // Reset the timer
 	};
 }
 //
 // Enemy spawn functions
 //
-function spawnSquare () {
-	// Spawn 1 square enemy in a random place
-	lastSpawn = Instantiate(square,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),0),Quaternion.Euler(0,0,0));
-	lastSpawn.transform.parent = gameObject.transform;
+function spawnSquare (count : int) {
+	for ( var i = 0; i<count; i++ ){
+		// Spawn 1 square enemy in a random place
+		lastSpawn = Instantiate(square,Vector3(Random.Range(-1*width,width),Random.Range((-1*height)+vOffset,height+vOffset),0),Quaternion.Euler(0,0,0));
+		lastSpawn.transform.parent = gameObject.transform;
+	};
 }

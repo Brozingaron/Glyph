@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\managers\preferenceManager.js" />
      <Compile Include="Assets\Scripts\managers\sceneManager.js" />
      <Compile Include="Assets\Scripts\ui\animation.js" />
+     <Compile Include="Assets\Scripts\ui\console.js" />
      <Compile Include="Assets\Scripts\ui\dev\fps.js" />
      <Compile Include="Assets\Scripts\ui\effects\backgroundRotate.js" />
      <Compile Include="Assets\Scripts\ui\effects\fancyBackground.js" />
@@ -82,8 +83,10 @@
      <Compile Include="Assets\Scripts\ui\persistance.js" />
      <Compile Include="Assets\Scripts\ui\raySpam.js" />
      <Compile Include="Assets\Scripts\ui\textScale.js" />
+     <Compile Include="Assets\Scripts\ui_menu\aurumText.js" />
      <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\buttonHelper.js" />
      <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\graphicsHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\pauseHelper.js" />
      <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\settingsHelper.js" />
      <Compile Include="Assets\Scripts\ui_menu\buttons\button.js" />
      <Compile Include="Assets\Scripts\ui_menu\buttons\controlSlider.js" />

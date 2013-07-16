@@ -28,25 +28,25 @@ function Start () {
 function Update () {
 	// Initiate a mess of conditional statements to figure which button should be active
 	if(helping == false){
-		if (Input.GetButtonDown("up")){
+		if (Input.GetKeyDown(PlayerPrefs.GetString("upKey")) || Input.GetKeyDown(PlayerPrefs.GetString("upKeyAlt"))){
 			raySpammer.on = false;
 			helping = true;
 			alt = false;
 			button = mainButtonCount;
 		};
-		if (Input.GetButtonDown("down")){
+		if (Input.GetKeyDown(PlayerPrefs.GetString("downKey")) || Input.GetKeyDown(PlayerPrefs.GetString("downKeyAlt"))){
 			raySpammer.on = false;
 			helping = true;
 			alt = false;
 			button = 1;
 		};
-		if (Input.GetButtonDown("left")){
+		if (Input.GetKeyDown(PlayerPrefs.GetString("leftKey")) || Input.GetKeyDown(PlayerPrefs.GetString("leftKeyAlt"))){
 			raySpammer.on = false;
 			helping = true;
 			alt = true;
 			button = 0;
 		};
-		if (Input.GetButtonDown("right")){
+		if (Input.GetKeyDown(PlayerPrefs.GetString("rightKey")) || Input.GetKeyDown(PlayerPrefs.GetString("rightKeyAlt"))){
 			raySpammer.on = false;
 			helping = true;
 			alt = true;
@@ -55,10 +55,10 @@ function Update () {
 	}
 	else{
 		if (alt == false){
-			if (Input.GetButtonDown("up")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("upKey")) || Input.GetKeyDown(PlayerPrefs.GetString("upKeyAlt"))){
 				button -= 1;
 			};
-			if (Input.GetButtonDown("down")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("downKey")) || Input.GetKeyDown(PlayerPrefs.GetString("downKeyAlt"))){
 				button += 1;
 			};
 			// Take maximums into account
@@ -69,20 +69,20 @@ function Update () {
 				button = 1;
 			};
 			// Deal with switching sets
-			if (Input.GetButtonDown("right")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("rightKey")) || Input.GetKeyDown(PlayerPrefs.GetString("rightKeyAlt"))){
 				alt = true;
 				button = 0;
 			};
-			if (Input.GetButtonDown("left")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("leftKey")) || Input.GetKeyDown(PlayerPrefs.GetString("leftKeyAlt"))){
 				alt = true;
 				button = altButtonCount;
 			};
 		};
 		if (alt == true){
-			if (Input.GetButtonDown("left")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("leftKey")) || Input.GetKeyDown(PlayerPrefs.GetString("leftKeyAlt"))){
 				button += 1;
 			};
-			if (Input.GetButtonDown("right")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("rightKey")) || Input.GetKeyDown(PlayerPrefs.GetString("rightKeyAlt"))){
 				button -= 1;
 			};
 			// Take maximums into account
@@ -93,18 +93,21 @@ function Update () {
 				button = 0;
 			};
 			// Deal with switching sets
-			if (Input.GetButtonDown("down")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("downKey")) || Input.GetKeyDown(PlayerPrefs.GetString("downKeyAlt"))){
 				alt = false;
 				button = 0;
 			};
-			if (Input.GetButtonDown("up")){
+			if (Input.GetKeyDown(PlayerPrefs.GetString("upKey")) || Input.GetKeyDown(PlayerPrefs.GetString("upKeyAlt"))){
 				alt = false;
 				button = mainButtonCount;
 			};
 		};
 	};
 	// Initiate another mess of conditional statements to hover the buttons if one of the buttons was pressed
-	if(Input.GetButtonDown("up") || Input.GetButtonDown("down") || Input.GetButtonDown("left") || Input.GetButtonDown("right")){
+		if(Input.GetKeyDown(PlayerPrefs.GetString("upKey")) || Input.GetKeyDown(PlayerPrefs.GetString("upKeyAlt")) || 
+			Input.GetKeyDown(PlayerPrefs.GetString("downKey")) || Input.GetKeyDown(PlayerPrefs.GetString("downKeyAlt")) ||
+			Input.GetKeyDown(PlayerPrefs.GetString("leftKey")) || Input.GetKeyDown(PlayerPrefs.GetString("leftKeyAlt")) ||
+			Input.GetKeyDown(PlayerPrefs.GetString("rightKey")) || Input.GetKeyDown(PlayerPrefs.GetString("rightKeyAlt")) ){
 		raySpammer.on = false; //Disable the ray spammer
 		Clear();
 		if (alt == false){

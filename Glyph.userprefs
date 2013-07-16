@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\arcadeEnt\death.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\managers\gameManager.js">
     <Files>
-      <File FileName="Assets\Scripts\arcadeEnt\trapezoidBoss.js" Line="23" Column="35" />
-      <File FileName="Assets\Scripts\arcadeEnt\enemyTransform.js" Line="23" Column="56" />
-      <File FileName="Assets\Scripts\arcadeEnt\bossSpawner.js" Line="23" Column="63" />
-      <File FileName="Assets\Scripts\arcadeEnt\spawn\arcadeSpawn.js" Line="36" Column="1" />
-      <File FileName="Assets\Scripts\arcadeEnt\spawn\insaneSpawn.js" Line="40" Column="53" />
-      <File FileName="Assets\Scripts\arcadeEnt\death.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ui_menu\buttonHelpers\pauseHelper.js" Line="58" Column="5" />
+      <File FileName="Assets\Scripts\managers\preferenceManager.js" Line="86" Column="24" />
+      <File FileName="Assets\Scripts\managers\gameManager.js" Line="140" Column="84" />
+      <File FileName="Assets\Scripts\ui\console.js" Line="34" Column="45" />
+      <File FileName="Assets\Scripts\ui_menu\buttonHelpers\graphicsHelper.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ui_menu\buttonHelpers\buttonHelper.js" Line="134" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

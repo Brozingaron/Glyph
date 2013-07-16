@@ -26,7 +26,7 @@ function OnLevelWasLoaded () {
 			change(menuSong);
 		}
 		else{
-			fade(1);
+			fade(1,0);
 		};
 	};
 	if (Application.loadedLevel == 6){
@@ -64,8 +64,8 @@ function change (song : AudioClip) {
 }
 
 // Define functions for fading volume levels
-function fade (newVol : float) {
-	iTween.ValueTo(gameObject,{"from":audio.volume,"to":newVol,"easetype":"easeOutCubic","Time":1,"onupdate":"tweenVol","onupdateparams":"float"});
+function fade (newVol : float, delay : float) {
+	iTween.ValueTo(gameObject,{"from":audio.volume,"to":newVol,"easetype":"easeOutCubic","Time":1,"delay":delay,"onupdate":"tweenVol","onupdateparams":"float"});
 }
 
 function crossFade () {

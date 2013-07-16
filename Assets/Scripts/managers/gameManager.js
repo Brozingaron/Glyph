@@ -84,24 +84,44 @@ function Update () {
 	if ( charge > chargeMax ){ charge = chargeMax; }; //Cap the charge
 	
 	// When you use an ability
-	if ( Input.GetButtonDown("ability1") && charge >= .25 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var pushParticles = Instantiate(pushParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(pushParticles,1); // Destroy this particle effect after 1 second
-		// If it's A1, wait 1 frame to let enemies realize they're dead, then tween the charge to 1 less bar
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.25 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .25 && timeScale > 0 && dead == false ){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a1Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a1KeyAlt"))){
+			// Make a pretty particle effect
+			var pushParticles = Instantiate(pushParticle,player.transform.position,Quaternion.Euler(0,0,0));
+			Destroy(pushParticles,1); // Destroy this particle effect after 1 second
+			iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.25 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+			
+			// Tell enemies to react
+			for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+				enemy.GetComponent(enemyDeath).push();
+			}
+		};
 	};
-	if ( Input.GetButtonDown("ability2") && charge >= .50 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var burstParticles = Instantiate(burstParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(burstParticles,1); // Destroy this particle effect after 1 second
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.50 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .50 && timeScale > 0 && dead == false){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a2Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a2KeyAlt"))){
+			// Make a pretty particle effect
+			var burstParticles = Instantiate(burstParticle,player.transform.position,Quaternion.Euler(0,0,0));
+			Destroy(burstParticles,1); // Destroy this particle effect after 1 second
+			iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.50 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+			
+			// Tell enemies to react
+			for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+				enemy.GetComponent(enemyDeath).burst();
+			}
+		};
 	};
-	if ( Input.GetButtonDown("ability3") && charge >= .75 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var nukeParticles = Instantiate(nukeParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(nukeParticles,1.5); // Destroy this particle effect after 1.5 seconds
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.75 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .75 && timeScale > 0 && dead == false){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a3Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a3KeyAlt"))){
+			// Make a pretty particle effect
+			var nukeParticles = Instantiate(nukeParticle,player.transform.position,Quaternion.Euler(0,0,0));
+			Destroy(nukeParticles,1.5); // Destroy this particle effect after 1.5 seconds
+			iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.75 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+			
+			// Tell enemies to react
+			for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+				enemy.GetComponent(enemyDeath).nuke();
+			}
+		};
 	};
 	
 	// Count the duration of this combo
@@ -117,6 +137,10 @@ function Update () {
 	
 	// Combo Breaker
 	if ( comboTimer > maxComboTimer && dead == false ){
+		if ( PlayerPrefs.HasKey("cheating") == false){ // If the player isn't cheating...
+			PlayerPrefs.SetInt("aurum", PlayerPrefs.GetInt("aurum") + multiplier);// Add that much aurum
+		};
+		GameObject.Find("Aurum").GetComponent(aurumText).refresh();
 		multiplier = 1; //Reset the multiplier
 		comboTimer = 0;
 		multiply = false; // Stop the multiplier
@@ -162,15 +186,17 @@ function die (){
 		player.GetComponent(death).fatal();
 		lives = 0;
 		dead = true;
-		// Set highscores
-		if ( Application.loadedLevel == 6 && PlayerPrefs.GetInt("arcadeHS") < score ){
-			PlayerPrefs.SetInt("arcadeHS",score);
-		};
-		if ( Application.loadedLevel == 7 && PlayerPrefs.GetInt("insaneHS") < score ){
-			PlayerPrefs.SetInt("insaneHS",score);
-		};
-		if ( Application.loadedLevel == 8 && PlayerPrefs.GetInt("endlessHS") < score ){
-			PlayerPrefs.SetInt("endlessHS",score);
+		// Set highscores (but only if the player didn't cheat)
+		if ( PlayerPrefs.HasKey("cheating") == false ){
+			if ( Application.loadedLevel == 6 && PlayerPrefs.GetInt("arcadeHS") < score ){
+				PlayerPrefs.SetInt("arcadeHS",score);
+			};
+			if ( Application.loadedLevel == 7 && PlayerPrefs.GetInt("insaneHS") < score ){
+				PlayerPrefs.SetInt("insaneHS",score);
+			};
+			if ( Application.loadedLevel == 8 && PlayerPrefs.GetInt("endlessHS") < score ){
+				PlayerPrefs.SetInt("endlessHS",score);
+			};
 		};
 	}
 	else{

@@ -49,6 +49,9 @@ function damaged () {
 	iTween.FadeTo(spriteObject,{"alpha":1.0,"time":0.2,"delay":0.4});
 	// Play the life lost sound
 	audio.PlayOneShot(lifeLostSound);
+	// Make the background music quieter for a second
+	GameObject.Find("Music(Clone)").audio.volume = 0.25;
+	GameObject.Find("Music(Clone)").GetComponent(musicManager).fade(1,2);
 }
 
 function fatal () {
@@ -80,5 +83,5 @@ function fatal () {
 	var dScreen = Instantiate(Death,Vector3(0,0,50),Quaternion.Euler(0,0,0));
 	dScreen.transform.parent = GameObject.Find("Border").transform; //Make the death screen a child of the Border beacue it animates
 	// Make the music quieter
-	GameObject.Find("Music(Clone)").GetComponent(musicManager).fade(0.25);
+	GameObject.Find("Music(Clone)").GetComponent(musicManager).fade(0.25,0);
 }

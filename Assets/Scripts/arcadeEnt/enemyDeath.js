@@ -13,50 +13,21 @@ private var dead : boolean = false; // If this enemy is dead
 private var suicidal : boolean = false; // If this enemy was killed because the game ended
 
 function Update () {
-	// React to abilities
-	if ( Input.GetButtonDown("ability1") && GameObject.Find("gameMan").GetComponent(gameManager).charge >= .25 ){
-		// Calculate the distance between the player & this enemy
-		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
-		// What should happen to the enemy depending on its distance
-		if (distance <= 25 ){
-			health -= 25 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 25) * (distance / 25) + 0.5 ),1.5,"easeOutQuint");
-		};
-	};
-	if ( Input.GetButtonDown("ability2") && GameObject.Find("gameMan").GetComponent(gameManager).charge >= .50 ){
-		// Calculate the distance between the player & this enemy
-		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
-		// What should happen to the enemy depending on its distance
-		if (distance <= 35 ){
-			health -= 35 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 35) * (distance / 35) + 1 ),2,"easeOutQuint");
-		};
-	};
-	if ( Input.GetButtonDown("ability3") && GameObject.Find("gameMan").GetComponent(gameManager).charge >= .75 ){
-		// Calculate the distance between the player & this enemy
-		distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
-		// What should happen to the enemy depending on its distance
-		if (distance <= 50 ){
-			health -= 50 / distance - 1;
-			push(Mathf.Abs(-1 * (distance / 50) * (distance / 50) + 1 ),5,"easeOutQuint");
-		};
-	};
-	
 	if ( health <= 0 && dead == false && suicidal == false ){
 		// If health is less than or equal to 0, die and inform the gameManager that
 		// there has been another casualty
 		dead = true; // Don't die again
 		GameObject.Find("gameMan").GetComponent(gameManager).killed(pointValue);
 		die();
-	}
+	};
 }
 
-function push (amount : float,speed:float, easeType : String){
+function pushAway (amount : float,speed:float, easeType : String){
 	// This function calls another function depending on the movement script
 	// It is directly responsible for enemies moving backwards
 	if (gameObject.GetComponent(linearFollow) != null){
 		gameObject.GetComponent(linearFollow).push(amount,speed,easeType);
-	}
+	};
 }
 
 function die () {
@@ -88,9 +59,42 @@ function finalFinalBlow () {
 	Destroy(gameObject);
 }
 
-function suicide (){
+function suicide () {
 	// Kill self if touches the player
 	// Fancier events can be added later
 	die();
 	suicidal = true;
+}
+
+// Ability Responder Functions
+// These are called by the GameManager
+
+function push () {
+	// Calculate the distance between the player & this enemy
+	distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
+	// What should happen to the enemy depending on its distance
+	if (distance <= 25 ){
+		health -= 25 / distance - 1;
+		pushAway(Mathf.Abs(-1 * (distance / 25) * (distance / 25) + 0.5 ),1.5,"easeOutQuint");
+	};
+}
+
+function burst () {
+	// Calculate the distance between the player & this enemy
+	distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
+	// What should happen to the enemy depending on its distance
+	if (distance <= 35 ){
+		health -= 35 / distance - 1;
+		pushAway(Mathf.Abs(-1 * (distance / 35) * (distance / 35) + 1 ),2,"easeOutQuint");
+	};
+}
+
+function nuke () {
+	// Calculate the distance between the player & this enemy
+	distance = Vector3.Magnitude( Vector3(transform.position.x - GameObject.Find("Soul").transform.position.x, transform.position.y - GameObject.Find("Soul").transform.position.y, 0));
+	// What should happen to the enemy depending on its distance
+	if (distance <= 50 ){
+		health -= 50 / distance - 1;
+		pushAway(Mathf.Abs(-1 * (distance / 50) * (distance / 50) + 1 ),5,"easeOutQuint");
+	};
 }

@@ -11,7 +11,7 @@ private var instantiated : GameObject; // the instantiated gameObject
 
 function Start () {
 	Invoke("Create",1); // Call the Create function in 1 second
-	transform.position = Vector3( Random.Range(-50,50), Random.Range(-50,50), 0); // Move to a random location
+	transform.position = Vector3( Random.Range(-69,69), Random.Range(-14,26), 0); // Move to a random location
 	
 	boss = Random.Range(0,0); // Pick a boss
 }
