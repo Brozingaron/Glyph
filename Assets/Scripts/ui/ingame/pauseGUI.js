@@ -17,8 +17,8 @@ function Start () {
 	gameMan = GameObject.Find("gameMan").GetComponent(gameManager);
 	raySpammer = GameObject.Find("Main Camera").GetComponent(raySpam);
 	musicMan = gameObject.Find("Music(Clone)").GetComponent(musicManager);
-	// Hide the pause GUIe 
-	transform.position.z=-1000; // Hide the UI
+	// Hide the pause GUI
+	transform.position.z=1000; // Hide the UI
 	goAway();
 }
 
@@ -36,7 +36,7 @@ function Update () {
 function show () {
 	// Show the UI
 	gameMan.timeScale = 0;
-	transform.position.z = 90;
+	transform.position.z = -90;
 	visible = true;
 	// Show the mouse
 	Screen.lockCursor = false;
@@ -49,7 +49,7 @@ function show () {
 	// Play a sound
 	audio.PlayOneShot(pauseSound);
 	// Make the music quieter
-	musicMan.fade(0.25);
+	musicMan.fade(0.25,0);
 }
 
 function hide () {
@@ -66,7 +66,7 @@ function hide () {
 	// Play a sound
 	audio.PlayOneShot(unpauseSound);
 	// Make the music louder
-	musicMan.fade(1);
+	musicMan.fade(1,0);
 }
 
 function goAway () {
@@ -75,5 +75,5 @@ function goAway () {
 	iTween.FadeTo(gameObject,{"alpha":0,"time":0.2,"easetype":"easeOutSine"});
 	iTween.ScaleTo(gameObject,{"x":0,"y":0,"time":0.2,"easetype":"easeOutSine"});
 	iTween.MoveTo(gameObject,{"z":-1000,"delay":0.2,"time":Time.deltaTime,"easetype":"linear"});
-	musicMan.fade(1);
+	musicMan.fade(1,0);
 }

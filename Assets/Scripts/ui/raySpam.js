@@ -30,3 +30,12 @@ function Activate () {
 function Deactivate () {
 	on = false;
 }
+
+function OnApplicationFocus (focus : boolean){
+	if (focus){
+		Activate();
+	}
+	else{
+		Deactivate();
+	};
+}

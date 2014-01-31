@@ -12,13 +12,14 @@
 	<AssemblyName>Assembly-UnityScript</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	<DebugSymbols>true</DebugSymbols>
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_LINUX;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_5;UNITY_4_1;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_2;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -36,6 +37,7 @@
 	<Reference Include="System" />
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
 	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
@@ -44,29 +46,28 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ent\death.js" />
-     <Compile Include="Assets\Scripts\ent\enemyDeath.js" />
-     <Compile Include="Assets\Scripts\ent\fountainDespawn.js" />
-     <Compile Include="Assets\Scripts\ent\linearFollow.js" />
-     <Compile Include="Assets\Scripts\ent\mouseAttatch.js" />
-     <Compile Include="Assets\Scripts\ent\scoreHide.js" />
-     <Compile Include="Assets\Scripts\ent\spawn\arcadeSpawn.js" />
-     <Compile Include="Assets\Scripts\ent\spawn\insaneSpawn.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\death.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\enemyDeath.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\enemyTransform.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\fountainDespawn.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\linearFollow.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\mouseAttatch.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\scoreHide.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\spawn\arcadeSpawn.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\spawn\bossSpawner.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\spawn\insaneSpawn.js" />
+     <Compile Include="Assets\Scripts\arcadeEnt\trapezoidBoss.js" />
+     <Compile Include="Assets\Scripts\classicEnt\mouseAttatchClassic.js" />
+     <Compile Include="Assets\Scripts\classicEnt\wasdMove.js" />
      <Compile Include="Assets\Scripts\managers\gameManager.js" />
+     <Compile Include="Assets\Scripts\managers\mapManager.js" />
      <Compile Include="Assets\Scripts\managers\musicManager.js" />
      <Compile Include="Assets\Scripts\managers\preferenceManager.js" />
      <Compile Include="Assets\Scripts\managers\sceneManager.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\button.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\buttonHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\graphicsHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\buttonHelpers\settingsHelper.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\controlSlider.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\minimalParticles.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\resolutionary.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\sound.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\vSync.js" />
-     <Compile Include="Assets\Scripts\ui\buttons\videoSlider.js" />
+     <Compile Include="Assets\Scripts\ui\animation.js" />
+     <Compile Include="Assets\Scripts\ui\console.js" />
      <Compile Include="Assets\Scripts\ui\dev\fps.js" />
+     <Compile Include="Assets\Scripts\ui\dev\update.js" />
      <Compile Include="Assets\Scripts\ui\effects\backgroundRotate.js" />
      <Compile Include="Assets\Scripts\ui\effects\fancyBackground.js" />
      <Compile Include="Assets\Scripts\ui\effects\nothing suspicous\backgroundEgg.js" />
@@ -81,10 +82,33 @@
      <Compile Include="Assets\Scripts\ui\ingame\pauseButton.js" />
      <Compile Include="Assets\Scripts\ui\ingame\pauseGUI.js" />
      <Compile Include="Assets\Scripts\ui\ingame\scoreAnim.js" />
+     <Compile Include="Assets\Scripts\ui\ingame\tutorial.js" />
+     <Compile Include="Assets\Scripts\ui\makingLevelDetails.js" />
      <Compile Include="Assets\Scripts\ui\persistance.js" />
      <Compile Include="Assets\Scripts\ui\raySpam.js" />
-     <Compile Include="Assets\Scripts\ui\splashText.js" />
      <Compile Include="Assets\Scripts\ui\textScale.js" />
+     <Compile Include="Assets\Scripts\ui_menu\additionalWindow.js" />
+     <Compile Include="Assets\Scripts\ui_menu\aurumText.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\buttonHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\graphicsHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\matrixHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\pauseHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttonHelpers\settingsHelper.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\button.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\consoleButton.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\controlSlider.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\keyEditor.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\minimalParticles.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\noControlTextArtifact.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\resolutionary.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\sound.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\vSync.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\videoSlider.js" />
+     <Compile Include="Assets\Scripts\ui_menu\buttons\windowController.js" />
+     <Compile Include="Assets\Scripts\ui_menu\splashText.js" />
+     <Compile Include="Assets\Scripts\ui_menu\unlock.js" />
+     <None Include="Assets\Build\Alpha Self Illuminated.shader" />
+     <None Include="Assets\Build\Alpha with Fade.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

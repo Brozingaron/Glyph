@@ -15,6 +15,7 @@ var comboTimer : float = 0.0; // The duration of this combo
 var maxComboTimer : float = 5.0; // Limit the duration of a combo
 var charge : float = 0.0; // The current charge of the ability bar
 var timeAlive : float = 0.0; // The duration of this round
+var lives : int = 3; // The number of lives the player has
 // Charge Rates
 private var chargeRate : float = 75.0; // Current Charge Rate as calculated by the game
 var chargeRate1 : float = 5.0; // Ability 1
@@ -40,12 +41,14 @@ var nukeMinimalParticle : GameObject;
 // Define a few in-game objects
 private var scoreObj : GUIText;
 private var multObj : GUIText;
+private var lifeObj : GUIText;
 private var player : GameObject;
 
 function Start () {
-	// Find the Score & Multiplier
+	// Find the Score, Multiplier & Lives
 	scoreObj = GameObject.Find("score").guiText;
 	multObj = GameObject.Find("multiplier").guiText;
+	lifeObj = GameObject.Find("LifeCounter").guiText;
 	// Find the player
 	player = GameObject.Find("Soul");
 	
@@ -69,9 +72,9 @@ function Update () {
 	if ( charge > 0.5 && charge <= 0.75){ chargeRate = chargeRate3;}; //If 2 bars are filled
 	if ( charge > 0.75 ){ chargeRate = chargeRate4;}; //If 3 bars are filled
 	
-	// Halve the charge rate if the player is over a fountain
+	// Reduce the charge rate if the player is over a fountain
 	if ( fountain == true ){
-		chargeRate = chargeRate / 2;
+		chargeRate = chargeRate / 4;
 	};
 	
 	// Charge the ability bar
@@ -81,24 +84,47 @@ function Update () {
 	if ( charge > chargeMax ){ charge = chargeMax; }; //Cap the charge
 	
 	// When you use an ability
-	if ( Input.GetButtonDown("ability1") && charge >= .25 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var pushParticles = Instantiate(pushParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(pushParticles,1); // Destroy this particle effect after 1 second
-		// If it's A1, wait 1 frame to let enemies realize they're dead, then tween the charge to 1 less bar
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.25 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .25 && timeScale > 0 && dead == false ){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a1Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a1KeyAlt"))){
+			push();
+		};
 	};
-	if ( Input.GetButtonDown("ability2") && charge >= .50 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var burstParticles = Instantiate(burstParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(burstParticles,1); // Destroy this particle effect after 1 second
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.50 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .50 && timeScale > 0 && dead == false){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a2Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a2KeyAlt"))){
+			burst();
+		};
 	};
-	if ( Input.GetButtonDown("ability3") && charge >= .75 && timeScale > 0 && dead == false){
-		// Make a pretty particle effect
-		var nukeParticles = Instantiate(nukeParticle,player.transform.position,Quaternion.Euler(0,0,0));
-		Destroy(nukeParticles,1.5); // Destroy this particle effect after 1.5 seconds
-		iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.75 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float","delay":Time.deltaTime});
+	if ( charge >= .75 && timeScale > 0 && dead == false){
+		if ( Input.GetKeyDown(PlayerPrefs.GetString("a3Key")) || Input.GetKeyDown(PlayerPrefs.GetString("a3KeyAlt"))){
+			nuke();
+		};
+	};
+	
+	// Allow the mouse to trigger abilities
+	if( Input.GetMouseButtonDown(0) && timeScale > 0 && dead == false ){
+		if ( charge >= .25 ){
+			push();
+		};
+	};
+	if( Input.GetMouseButtonDown(1) && timeScale > 0 && dead == false ){
+		if ( charge == 1 ){
+			apocalypse();
+		}
+		else{
+			if (charge >= .75 ){
+				nuke();
+			}
+			else{
+				if (charge >= .5 ){
+					burst();
+				}
+				else{
+					if (charge >= .25){
+						push();
+					};
+				};
+			};
+		};
 	};
 	
 	// Count the duration of this combo
@@ -114,6 +140,10 @@ function Update () {
 	
 	// Combo Breaker
 	if ( comboTimer > maxComboTimer && dead == false ){
+		if ( PlayerPrefs.HasKey("cheating") == false){ // If the player isn't cheating...
+			PlayerPrefs.SetInt("aurum", PlayerPrefs.GetInt("aurum") + multiplier);// Add that much aurum
+		};
+		GameObject.Find("Aurum").GetComponent(aurumText).refresh();
 		multiplier = 1; //Reset the multiplier
 		comboTimer = 0;
 		multiply = false; // Stop the multiplier
@@ -125,13 +155,61 @@ function Update () {
 	// Update the scoreboard
 	scoreObj.text = "" + score;
 	multObj.text = "x" + multiplier;
+	
+	// Update the life counter
+	if( dead == false){
+		lifeObj.text = "x" + lives;
+	}
+	else{
+		lifeObj.text = "";
+	}
+}
+
+function push (){
+	// Make a pretty particle effect
+	var pushParticles = Instantiate(pushParticle,player.transform.position,Quaternion.Euler(0,0,0));
+	Destroy(pushParticles,1); // Destroy this particle effect after 1 second
+	iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.25 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+	
+	// Tell enemies to react
+	for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+		enemy.GetComponent(enemyDeath).push();
+	};
+}
+
+function burst (){
+	// Make a pretty particle effect
+	var burstParticles = Instantiate(burstParticle,player.transform.position,Quaternion.Euler(0,0,0));
+	Destroy(burstParticles,1); // Destroy this particle effect after 1 second
+	iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.50 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+	
+	// Tell enemies to react
+	for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+		enemy.GetComponent(enemyDeath).burst();
+	};
+}
+
+function nuke (){
+	// Make a pretty particle effect
+	var nukeParticles = Instantiate(nukeParticle,player.transform.position,Quaternion.Euler(0,0,0));
+	Destroy(nukeParticles,1.5); // Destroy this particle effect after 1.5 seconds
+	iTween.ValueTo(gameObject,{"from":charge,"to":charge - 0.75 + 0.25 / chargeRate,"Time":0.25,"onupdate":"consumeTween","onupdateparams":"float"});
+	
+	// Tell enemies to react
+	for ( var enemy : GameObject in GameObject.FindGameObjectsWithTag("enemy") ){
+		enemy.GetComponent(enemyDeath).nuke();
+	};
+}
+
+function apocalypse (){
+	//Not in alpha ;)
 }
 
 function consumeTween (newVal : float){
 	charge = newVal;
 }
 
-function killed (){
+function killed (pointValue : int){
 	// Don't change the score directly. Fancy math is used
 	// Call this function whenever an entity is killed
 	killedCount += 1;
@@ -141,5 +219,31 @@ function killed (){
 	else{
 		multiplier += 1;
 	};
-	score += 1 * multiplier;
+	score += pointValue * multiplier;
+}
+
+function die (){
+	// Call this function when the player dies or loses a life
+	lives -= 1;
+	if ( lives < 0 ){
+		player.GetComponent(death).fatal();
+		lives = 0;
+		dead = true;
+		// Set highscores (but only if the player didn't cheat)
+		if ( PlayerPrefs.HasKey("cheating") == false ){
+			if ( Application.loadedLevel == 6 && PlayerPrefs.GetInt("arcadeHS") < score ){
+				PlayerPrefs.SetInt("arcadeHS",score);
+			};
+			if ( Application.loadedLevel == 7 && PlayerPrefs.GetInt("insaneHS") < score ){
+				PlayerPrefs.SetInt("insaneHS",score);
+			};
+			if ( Application.loadedLevel == 8 && PlayerPrefs.GetInt("endlessHS") < score ){
+				PlayerPrefs.SetInt("endlessHS",score);
+			};
+		};
+	}
+	else{
+		player.GetComponent(death).damaged();
+	};
+	
 }
