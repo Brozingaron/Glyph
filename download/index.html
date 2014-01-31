@@ -25,8 +25,8 @@
 
 <div class="content">
 <h1>Get Glyph</h1>
-<p class="postDate">June 30, 2013</p>
-<br /><h3>Alpha 2: Choose a download</h3>
+<p class="postDate">January 29, 2014</p>
+<br /><h3>Alpha 3: Choose a download</h3>
 <br />
 <div style="height:460px;width:420px;margin-left:auto;margin-right:auto;-webkit-border-radius: 10px;border-radius: 10px;border:2px solid rgba(0,0,0,0.1);">
 <br /><h2 style="text-align:center;">Choose your operating system</h2>
@@ -39,10 +39,36 @@
 <br />The source code download above is for <a href="http://www.unity3d.com">Unity</a>.
 <br />Source cannot be natively played on any platform without being compiled.</p>
 <div style="margin-right:auto;margin-left:auto;width:500px;" ><a href="nightly/"><img src="nightly.png" width=500px></a></div>
+<h2>Alpha 3 Release Notes</h2>
+<ul>
+<li>Added boss!</li>
+<ul><li>The Trapezoid of Doom is now in the game</li></ul>
+<li>Added lives to arcade and insane mode</li>
+<li>New music for insane mode</li>
+<li>New enemy sprite</li>
+<li>New pause sounds</li>
+<li>Other minor gameplay improvements</li>
+<li>Changed recharge rates</li>
+<ul><li>Fountains now reduce the recharge time by a factor of 4</li></ul>
+<li>Gameplay progression</li>
+<li>New/modified splash text</li>
+<li>New controls menu</li>
+<li>Take a screenshot with F4</li>
+<li>Added a very basic update checker which launches the browser if an update is found</li>
+<li>Reduced game size dramatically by removing psd's and other source files before compiling</li>
+<li>Added game console</li>
+<ul><li>Once enabled in the controls settings, press ` (the accent key, normally on the same button as ~) to open the console.</li></ul>
+<li><b>Note that this update will erase all scores and settings from other versions of Glyph</b></li>
+</ul>Known Bugs:
+<ul>
+<li>The number of enemies is limited to 50, at which point a boss spawns</li>
+<ul><li>The issue is not a bug, but it affects gameplay. The motion script needs to be rewritten to be more efficient.</li></ul>
+<li>When enemies transform into bosses, it often produces a huge lag spike</li>
+</ul><a href="/Glyph/blog/permalink.html?005">See the blog for more details</a>
 <h2>Alpha 2 Release Notes</h2>
 <ul>
 <li>Added energy fountains</li>
-<ul><li>hover over them to speed up your recharge rate by a factor of 2.</li></ul>
+<ul><li>hover over them to speed up your recharge time by a factor of 2.</li></ul>
 <li>Changed recharge rates</li>
 <ul><li>5, 15, 25, and 45 seconds from the previous bar respectively.</li></ul>
 <li>Gameplay progression</li>
@@ -53,11 +79,6 @@
 <li>New graphics options</li>
 <li>Removed startup settings screen</li>
 <li>Removed FPS meter</li>
-</ul>Known Bugs:
-<ul>
-<li>With a lot of enemies on the screen, framerates drop dramatically due to path calculations</li>
-<ul><li>The issue is not render time, but CPU calculation time. With 200+ enemies, the main thread can take between 3 and 5 seconds opposed to a preferred 15-25 ms.</li></ul>
-<li>Insane Mode is not a bug.</li>
 </ul><a href="/Glyph/blog/permalink.html?001">See the blog for more details</a>
 <h2>Alpha 1 Release Notes</h2>
 <br />Alpha 1 is the initial release of Glyph. Arcade mode is the only gameplay style currently available, but other modes and new abilities and gameplay mechanics will be added in future updates.

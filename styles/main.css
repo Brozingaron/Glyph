@@ -16,8 +16,8 @@ body{
 .content a:visited{color:#0072cf;}
 .content a:hover{color:#004ebc;text-decoration:none;text-shadow: 0px 0px 5px #97c5eb;}
 .content a:active{color:#3a7dda;text-decoration:underline;text-shadow:none;}
-#sidebar a:link, a:visited{text-shadow: rgba(0,0,0,.5) 0 -2px 0; color:rgba(255,255,255,0.75);}
-#sidebar a:hover, a:active{text-shadow: rgba(0,0,0,.5) 0 -2px 0, 0px 0px 20px white; color:rgba(255,255,255,1);}
+#sidebar a:link, #sidebar a:visited{text-shadow: rgba(0,0,0,.5) 0 -2px 0; color:rgba(255,255,255,0.75);}
+#sidebar a:hover, #sidebar a:active{text-shadow: rgba(0,0,0,.5) 0 -2px 0, 0px 0px 20px white; color:rgba(255,255,255,1);}
 #header{
 	height:100px;
 	margin:-8px -8px 8px -8px;
@@ -63,9 +63,9 @@ body{
 }
 #glow{
 	position:relative;
-	left:-23px;
-	top:8px;
-	float:right;
+	top:-50px;
+	margin-bottom:-120px;
+	margin-left:222px;
 }
 .content{
 	background:rgba(230,230,230,1);
@@ -86,15 +86,18 @@ body{
 	margin-right:auto;
 	border:10px solid white;
 	box-shadow:5px;
-	max-width:700px;
+	max-width:800px;
 	-webkit-box-shadow:  0px 2px 3px 0px rgba(0, 0, 0, .5);
 	box-shadow:  0px 2px 3px 0px rgba(0, 0, 0, .5);
+}
+.image img{
+	margin-bottom:-8px;
 }
 .hero{
 	padding:4px;
 	height:590px;
 	margin:0px 0px 8px 286px;
-	background-image:url(/Glyph/img/hero.png);
+	background-image:url(../img/hero.png);
 	background-size:1000px;
 	background-position:center top;
 	border: 1px solid #000000;
