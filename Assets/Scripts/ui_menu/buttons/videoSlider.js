@@ -38,7 +38,7 @@ function Update () {
 	// Revert button texture if needed
 	if (gameObject.renderer.material.mainTexture == hoverOn || gameObject.renderer.material.mainTexture == hoverOff){
 		// If the mouse has been moved...
-		if ( Input.GetAxis("Mouse X") != 0 && Input.GetAxis("Mouse Y") != 0){
+		if ( Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0){
 			// ... And if the GameObject hasn't been hit with a ray since the last frame update, revert its texture
 			if (revert == 1 ){ 
 				if (Screen.fullScreen == false){gameObject.renderer.material.mainTexture = off;};

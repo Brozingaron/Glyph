@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c6b5edc498324184e9b61ffc1dc9cdfd
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - background_0: {fileID: 2800000, guid: 04898f21acd8c1948a45658434142102, type: 3}
+  - background_1: {fileID: 2800000, guid: 48958986017af4a40bbc9ce26f3bfcf2, type: 3}
+  - background_2: {fileID: 2800000, guid: f1cc84335f107514696e313cff7b1616, type: 3}
+  - background_3: {fileID: 2800000, guid: 9f054e8015320aa45ba4985ce5eb0a5b, type: 3}
+  - background_4: {fileID: 2800000, guid: 732b4875e7b31224f869d70cb5862148, type: 3}
+  - background_5: {fileID: 2800000, guid: f0daafd45c6aa824c93863e66870dc8f, type: 3}
+  - seperator_50: {fileID: 2100000, guid: 7e9eed0aa5087f843bf421e226700f15, type: 2}
+  - seperator_25: {fileID: 2100000, guid: c1f92dfe4c7a5f6499293df835bb5a66, type: 2}
+  - seperator_20: {fileID: 2100000, guid: 06fbae4b59418c94baa4ea9f9a4fc4aa, type: 2}
+  - seperator_15: {fileID: 2100000, guid: ddd2b64eba793ef4f856f52afde42fd5, type: 2}
+  - seperator_10: {fileID: 2100000, guid: 04646012b562b7b4ea458d3d984a6dcb, type: 2}
+  - seperator_5: {fileID: 2100000, guid: 34c0be43a7e99284ba228bd9c93bda09, type: 2}
+  - seperator_0: {fileID: 2100000, guid: 8e80adf747ee663459a61ea6131b8e6e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

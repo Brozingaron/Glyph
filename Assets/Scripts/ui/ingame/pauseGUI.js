@@ -17,8 +17,8 @@ function Start () {
 	gameMan = GameObject.Find("gameMan").GetComponent(gameManager);
 	raySpammer = GameObject.Find("Main Camera").GetComponent(raySpam);
 	musicMan = gameObject.Find("Music(Clone)").GetComponent(musicManager);
-	// Hide the pause GUIe 
-	transform.position.z=-1000; // Hide the UI
+	// Hide the pause GUI
+	transform.position.z=1000; // Hide the UI
 	goAway();
 }
 
@@ -36,7 +36,7 @@ function Update () {
 function show () {
 	// Show the UI
 	gameMan.timeScale = 0;
-	transform.position.z = 90;
+	transform.position.z = -90;
 	visible = true;
 	// Show the mouse
 	Screen.lockCursor = false;

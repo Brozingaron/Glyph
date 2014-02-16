@@ -10,30 +10,35 @@ var Background : GameObject; //Background Prefab
 var musicManPrefab : GameObject; // Music Manager Prefab
 var consolePrefab : GameObject; // console Prefab
 
+private var easeType : String = "easeOutQuint";
+
 function Start () {
+	// For..... Development.... purposes.......
+	//Time.timeScale = 0.05;
+	
 	newScene = Application.loadedLevel; // Get the current loaded level to compare it later
-	// Animate in the elements if an animation tag is in the scene
+	
+	// Run the opening animations, if applicable
 	if (GameObject.FindWithTag("zoom") != null ){
-		iTween.ScaleFrom(GameObject.FindWithTag("zoom"),{"x":0,"y":0,"easetype":"easeOutBack","time":0.5}); // Zoom animation scale
-		iTween.FadeFrom(GameObject.FindWithTag("zoom"),{"alpha":0,"easetype":"easeOutSine","time":0.2}); // Zoom animation fade
+		iTween.ScaleFrom(GameObject.FindWithTag("zoom"),{"x":0,"y":0,"easetype":easeType,"time":0.5}); // Zoom animation scale
+		iTween.FadeFrom(GameObject.FindWithTag("zoom"),{"alpha":0,"easetype":easeType,"time":0.2}); // Zoom animation fade
 	};
 	if (GameObject.FindWithTag("slideup") != null ){	
-		iTween.MoveFrom(gameObject.FindWithTag("slideup"),{"y":-54 - gameObject.FindWithTag("slideup").transform.localScale.y / 2,"easetype":"easeOutElastic","time":1});
+		iTween.MoveFrom(gameObject.FindWithTag("slideup"),{"y":-54 - gameObject.FindWithTag("slideup").transform.localScale.y / 2,"easetype":easeType,"time":0.5});
 	};
 	if (GameObject.FindWithTag("slidedown") != null ){
-		iTween.MoveFrom(gameObject.FindWithTag("slidedown"),{"y":54 + gameObject.FindWithTag("slidedown").transform.localScale.y / 2,"easetype":"easeOutElastic","time":1});
+		iTween.MoveFrom(gameObject.FindWithTag("slidedown"),{"y":54 + gameObject.FindWithTag("slidedown").transform.localScale.y / 2,"easetype":easeType,"time":0.5});
 	};
-	// Add the background & Music Manager to the scene if they're not there already
+	if (GameObject.Find("Menu") != null){
+		for (var i=0; i<GameObject.Find("Menu").transform.childCount; i++){
+			MenuSlideIn(GameObject.Find("Menu").transform.GetChild(i).gameObject, 600 - 100 * i , i*0.15);
+		}
+	};
+	// Add the background, Music Manager and console to the scene if they're not there already
 	// Mostly for development purposes
-	if (GameObject.Find("Background") == null && GameObject.Find("Background(Clone)") == null){
-		Instantiate(Background,Vector3(0,0,-90),Quaternion.Euler(0,0,0));
-	};
-	if (GameObject.Find("Music") == null && GameObject.Find("Music(Clone)") == null ){
-		Instantiate(musicManPrefab,Vector3(0,0,0),Quaternion.Euler(0,0,0));
-	};
-	if (GameObject.Find("Console") == null && GameObject.Find("Console(Clone)") == null ){
-		Instantiate(consolePrefab,Vector3(24,108,90),Quaternion.Euler(90,0,0));
-	};
+	if (GameObject.Find("Background") == null && GameObject.Find("Background(Clone)") == null){ Instantiate(Background,Vector3(0,0,90),Quaternion.Euler(0,180,0)); };
+	if (GameObject.Find("Music") == null && GameObject.Find("Music(Clone)") == null ){ Instantiate(musicManPrefab,Vector3(0,0,0),Quaternion.Euler(0,0,0)); };
+	if (GameObject.Find("Console") == null && GameObject.Find("Console(Clone)") == null ){ Instantiate(consolePrefab,Vector3(-24,108,-90),Quaternion.Euler(90,180,0)); };
 	// Hide the background if needed
 	if (Application.loadedLevel == 8){
 		GameObject.Find("Faded").renderer.material.color.a = 0;
@@ -52,7 +57,11 @@ function Update () {
 	if ( timeout > animTime ){ // If the timer finishes, load the new level
 		if (newScene == -1 || newScene == -2){
 			if (newScene == -1){Application.LoadLevel(Application.loadedLevel);}; // If the newScene is -1, reload this scene
-			if (newScene == -2){Application.Quit();}; // If the newScene is -2, quit the game
+			// Broken as of Unity 4.3.2 See below for workaround
+			//if (newScene == -2){Application.Quit();}; // If the newScene is -2, quit the game
+			
+			// Workaround for Application.Quit() causing a game crash
+			if (newScene == -2){System.Diagnostics.Process.GetCurrentProcess().Kill();}; // If the newScene is -2, quit the game
 		}
 		//Otherwise, proceed to load that level
 		else{
@@ -76,7 +85,7 @@ function change () {
 		iTween.ColorTo(GameObject.Find("White"),{"a":1,"time":0.2});
 	};
 	if (newScene == 7){
-		iTween.ColorTo(GameObject.Find("Background Color"),{"Color":Color(.749,0,0),"time":0.2}); //Reset the background color to red
+		iTween.ColorTo(GameObject.Find("Background Color"),{"Color":Color(.749,.125,0),"time":0.2}); //Reset the background color to red
 		// Fade in the starbursts
 		iTween.ColorTo(GameObject.Find("Faded"),{"a":1,"time":0.2});
 		iTween.ColorTo(GameObject.Find("Solid"),{"a":1,"time":0.2});
@@ -96,13 +105,18 @@ function change () {
 	
 	if (GameObject.FindWithTag("zoom") != null ){ //Only animate if a tag exists
 		// Zoom animation scale to 10x original object's size
-		iTween.ScaleTo(GameObject.FindWithTag("zoom"),{"x":GameObject.FindWithTag("zoom").transform.localScale.x * 10,"y":GameObject.FindWithTag("zoom").transform.localScale.y * 10,"easetype":"easeOutSine","time":1});
-		iTween.FadeTo(GameObject.FindWithTag("zoom"),{"alpha":0,"easetype":"easeOutSine","time":0.2}); // Zoom animation fade
+		iTween.ScaleTo(GameObject.FindWithTag("zoom"),{"x":GameObject.FindWithTag("zoom").transform.localScale.x * 10,"y":GameObject.FindWithTag("zoom").transform.localScale.y * 10,"easetype":easeType,"time":0.5});
+		iTween.FadeTo(GameObject.FindWithTag("zoom"),{"alpha":0,"easetype":easeType,"time":0.2}); // Zoom animation fade
 	};
 	if (GameObject.FindWithTag("slideup") != null ){	
-		iTween.MoveTo(gameObject.FindWithTag("slideup"),{"y":-54 - gameObject.FindWithTag("slideup").transform.localScale.y * 4,"easetype":"easeOutElastic","time":1});
+		iTween.MoveTo(gameObject.FindWithTag("slideup"),{"y":-54 - gameObject.FindWithTag("slideup").transform.localScale.y * 4,"easetype":easeType,"time":0.5});
 	};
 	if (GameObject.FindWithTag("slidedown") != null ){
-		iTween.MoveTo(gameObject.FindWithTag("slidedown"),{"y":54 + gameObject.FindWithTag("slidedown").transform.localScale.y / 2,"easetype":"easeOutElastic","time":1});
+		iTween.MoveTo(gameObject.FindWithTag("slidedown"),{"y":54 + gameObject.FindWithTag("slidedown").transform.localScale.y / 2,"easetype":easeType,"time":0.5});
 	};
+}
+
+
+function MenuSlideIn (target : GameObject, speed : float, delay : float){
+	iTween.MoveFrom(target,{"x":108,"speed":speed,"delay":delay,"easetype":easeType});
 }

@@ -6,7 +6,7 @@
 // Define some game objects
 private var raySpammer : raySpam;
 // Main buttons
-var mainButtonCount : int; // How many buttons are on screen
+private var mainButtonCount : int = 5; // How many buttons are on screen
 var button1 : button;
 var button2 : button;
 var button3 : button;
@@ -27,6 +27,37 @@ private var button : int = 0; //Which button is in focus
 
 function Start () {
 	raySpammer = GameObject.Find("Main Camera").GetComponent(raySpam);
+	// Remove invalid or disabled buttons
+	if ( button5 == null || button5 == MissingReferenceException || button5.enabled == false){
+		button5 = null;
+		mainButtonCount -= 1;
+	};
+	if ( button4 == null || button4 == MissingReferenceException || button4.enabled == false){
+		button4 = button5;
+		button5 = null;
+		mainButtonCount -= 1;
+	};
+	if ( button3 == null || button3 == MissingReferenceException || button3.enabled == false){
+		button3 = button4;
+		button4 = button5;
+		button5 = null;
+		mainButtonCount -= 1;
+	};
+	if ( button2 == null || button2 == MissingReferenceException || button2.enabled == false){
+		button2 = button3;
+		button3 = button4;
+		button4 = button5;
+		button5 = null;
+		mainButtonCount -= 1;
+	};
+	if ( button1 == null || button1 == MissingReferenceException || button1.enabled == false){
+		button1 = button2;
+		button2 = button3;
+		button3 = button4;
+		button4 = button5;
+		button5 = null;
+		mainButtonCount -= 1;
+	};
 }
 
 function Update () {
@@ -115,11 +146,11 @@ function Update () {
 		raySpammer.on = false; //Disable the ray spammer
 		Clear();
 		if (alt == false){
-			if (button == 1){button1.onRaycastHit();};
-			if (button == 2){button2.onRaycastHit();};
-			if (button == 3){button3.onRaycastHit();};
-			if (button == 4){button4.onRaycastHit();};
-			if (button == 5){button5.onRaycastHit();};
+			if (button == 1 && button1 != null && button1 != MissingReferenceException){button1.onRaycastHit();};
+			if (button == 2 && button2 != null && button2 != MissingReferenceException){button2.onRaycastHit();};
+			if (button == 3 && button3 != null && button3 != MissingReferenceException){button3.onRaycastHit();};
+			if (button == 4 && button4 != null && button4 != MissingReferenceException){button4.onRaycastHit();};
+			if (button == 5 && button5 != null && button5 != MissingReferenceException){button5.onRaycastHit();};
 		}
 		else{
 			if (button == 0){altButton0.onRaycastHit();};
@@ -186,11 +217,11 @@ function Update () {
 
 function Clear (){
 	// This function resets all textures
-	if (button1 != null){ button1.gameObject.renderer.material.mainTexture = button1.normal; };
-	if (button2 != null){ button2.gameObject.renderer.material.mainTexture = button2.normal; };
-	if (button3 != null){ button3.gameObject.renderer.material.mainTexture = button3.normal; };
-	if (button4 != null){ button4.gameObject.renderer.material.mainTexture = button4.normal; };
-	if (button5 != null){ button5.gameObject.renderer.material.mainTexture = button5.normal; };
+	if (button1 != null && button1 != MissingReferenceException){ button1.gameObject.renderer.material.mainTexture = button1.normal; };
+	if (button2 != null && button2 != MissingReferenceException){ button2.gameObject.renderer.material.mainTexture = button2.normal; };
+	if (button3 != null && button3 != MissingReferenceException){ button3.gameObject.renderer.material.mainTexture = button3.normal; };
+	if (button4 != null && button4 != MissingReferenceException){ button4.gameObject.renderer.material.mainTexture = button4.normal; };
+	if (button5 != null && button5 != MissingReferenceException){ button5.gameObject.renderer.material.mainTexture = button5.normal; };
 	// Now for the alt buttons
 	if (altButton0 != null){ altButton0.gameObject.renderer.material.mainTexture = altButton0.normal; };
 	if (altButton1 != null){ altButton1.gameObject.renderer.material.mainTexture = altButton1.normal; };

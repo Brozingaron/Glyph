@@ -21,7 +21,7 @@ private var revert = 0.0; // Deals with changing the texture back when not hover
 var state : boolean = false; //If vSync is on or not
 
 function Start () {
-	if (QualitySettings.vSyncCount != 0){
+	if (QualitySettings.vSyncCount > 0){
 		state = true;
 	};
 	if (state == false){
@@ -42,7 +42,7 @@ function Update () {
 	// Revert button texture if needed
 	if (gameObject.renderer.material.mainTexture == hoverOn || gameObject.renderer.material.mainTexture == hoverOff){
 		// If the mouse has been moved...
-		if ( Input.GetAxis("Mouse X") != 0 && Input.GetAxis("Mouse Y") != 0){
+		if ( Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0){
 			// ... And if the GameObject hasn't been hit with a ray since the last frame update, revert its texture
 			if (revert == 1 ){ 
 				if (state == false){gameObject.renderer.material.mainTexture = off;};

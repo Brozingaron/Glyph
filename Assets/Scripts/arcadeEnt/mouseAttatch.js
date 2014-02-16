@@ -52,7 +52,7 @@ function Start () {
 }
 
 function Update () {
-	x = transform.position.x + -1 * sensitivity * gameMan.timeScale * Input.GetAxis("Mouse X");
+	x = transform.position.x + sensitivity * gameMan.timeScale * Input.GetAxis("Mouse X");
 	y = transform.position.y + sensitivity * gameMan.timeScale * Input.GetAxis("Mouse Y");
 	
 	// Apply maximum domains

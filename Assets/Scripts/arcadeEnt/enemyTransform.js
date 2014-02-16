@@ -14,7 +14,7 @@ function Start () {
 }
 
 function Update () {
-	if ( GameObject.Find("bossSpawn(Clone)") != null && initiated == false ){
+	if ( GameObject.Find("bossSpawn") != null && initiated == false ){
 		initiated = true; // Don't repeat these steps
 		
 		// Make this enemy non-lethal
@@ -24,7 +24,7 @@ function Update () {
 		
 		// Tween this enemy to the object
 		iTween.MoveTo(gameObject,{
-			"position":GameObject.Find("bossSpawn(Clone)").transform.position,
+			"position":GameObject.Find("bossSpawn").transform.position,
 			"time":0.7,
 			"easetype":"EaseOutElastic",
 			"oncomplete":"Morph"});

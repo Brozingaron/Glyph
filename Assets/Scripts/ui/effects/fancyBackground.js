@@ -3,11 +3,11 @@
 //Makes the background move inversley to the cursor or player
 
 // The maximum position (+/-) that the background can move across an axis
-var xMax : float = 5;
-var yMax : float = 5;
-var zPos : int = -150; // Keep the Z position constant in the background
+private var xMax : float = 5;
+private var yMax : float = 5;
+private var zPos : int = 150; // Keep the Z position constant in the background
 
-var velocity : float = 10; // 1 / Max speed of the background
+private var velocity : float = 20; // 1 / Max speed of the background
 
 // Define the variables for the new background position from the origin
 private var xPos = 0.0;

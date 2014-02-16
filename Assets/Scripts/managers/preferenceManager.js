@@ -5,13 +5,22 @@
 
 
 function Start () {
+	// Check the previous version
+	if( PlayerPrefs.HasKey("lastBuild") == false){
+		// Delete all settings if no other build has set a version number
+		PlayerPrefs.DeleteAll();
+	}
+	else{
+		if( PlayerPrefs.GetInt("lastBuild") > 3){
+			// Reset the settings if playing from a newer build
+			PlayerPrefs.DeleteAll();
+		}
+	}
+	// Record this verson number
+	PlayerPrefs.SetInt("lastBuild",3);
+	
 	// Create varibles if needed
-	if( PlayerPrefs.HasKey("minimalParticles") == false ){
-		PlayerPrefs.SetInt("minimalParticles",0);
-	};
-	if( PlayerPrefs.HasKey("muted") == false){
-		PlayerPrefs.SetInt("muted",0);
-	};
+	// Game Stats
 	if( PlayerPrefs.HasKey("infiniteHS") == false){
 		PlayerPrefs.SetInt("infiniteHS",0);
 	};
@@ -26,6 +35,20 @@ function Start () {
 	};
 	if( PlayerPrefs.HasKey("aurum") == false){
 		PlayerPrefs.SetInt("aurum",0);
+	};
+	if( PlayerPrefs.HasKey("tutorialSeen") == false){
+		PlayerPrefs.SetInt("tutorialSeen",0);
+	};
+	
+	// Settings
+	if( PlayerPrefs.HasKey("minimalParticles") == false ){
+		PlayerPrefs.SetInt("minimalParticles",0);
+	};
+	if( PlayerPrefs.HasKey("muted") == false){
+		PlayerPrefs.SetInt("muted",0);
+	};
+	if( PlayerPrefs.HasKey("hand") == false){
+		PlayerPrefs.SetInt("hand",1);
 	};
 	
 	//Now do the keybindings
@@ -44,6 +67,9 @@ function Start () {
 	};
 	if( PlayerPrefs.HasKey("a5Key") == false){
 		PlayerPrefs.SetString("a5Key","5");
+	};
+	if( PlayerPrefs.HasKey("aAKey") == false){
+		PlayerPrefs.SetString("aAKey","tab");
 	};
 	if( PlayerPrefs.HasKey("upKey") == false){
 		PlayerPrefs.SetString("upKey","w");
@@ -74,6 +100,9 @@ function Start () {
 	if( PlayerPrefs.HasKey("a5KeyAlt") == false){
 		PlayerPrefs.SetString("a5KeyAlt","b");
 	};
+	if( PlayerPrefs.HasKey("aAKeyAlt") == false){
+		PlayerPrefs.SetString("aAKeyAlt","shift");
+	};
 	if( PlayerPrefs.HasKey("upKeyAlt") == false){
 		PlayerPrefs.SetString("upKeyAlt","up");
 	};
@@ -85,6 +114,11 @@ function Start () {
 	};
 	if( PlayerPrefs.HasKey("rightKeyAlt") == false){
 		PlayerPrefs.SetString("rightKeyAlt","right");
+	};
+	
+	// Disable the dev console by default
+	if ( PlayerPrefs.HasKey("consoleEnabled") == false){
+		PlayerPrefs.SetInt("consoleEnabled",0);
 	};
 	
 	// The user isn't cheating (yet)

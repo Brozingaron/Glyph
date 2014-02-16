@@ -38,12 +38,14 @@ function Start (){
 		pressed = pressedOn;
 		hover = hoverOn;
 		normal = on;
+		gameObject.renderer.material.mainTexture = on;
 	}
 	else{
 		current = false;
 		pressed = pressedOff;
 		hover = hoverOff;
 		normal = off;
+		gameObject.renderer.material.mainTexture = off;
 	};
 	
 	// See if the game is running at native resolution
@@ -61,7 +63,7 @@ function Update () {
 	// Revert button texture if needed
 	if (gameObject.renderer.material.mainTexture == hoverOn && invalid == false || gameObject.renderer.material.mainTexture == hoverOff && invalid == false){
 		// If the mouse has been moved...
-		if ( Input.GetAxis("Mouse X") != 0 && Input.GetAxis("Mouse Y") != 0){
+		if ( Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0){
 			// ... And if the GameObject hasn't been hit with a ray since the last frame update, revert its texture
 			if (revert == 1 ){ 
 				if (current == true){gameObject.renderer.material.mainTexture = on;};

@@ -5,8 +5,7 @@
 var background : GameObject; //The background of the console
 
 // The console keeps up with these variables on its own
-private var isEnabled : boolean = false; //If the console is enabled
-private var visible : boolean = false; //If it's currently visible
+private var visible : boolean = false; //If the console is currently visible
 private var thisInput : String = ""; //The current command
 private var history : String = ""; //All other text in the console
 private var valid : boolean = false; //If the last entered command was processed
@@ -22,13 +21,6 @@ function Start () {
 		PlayerPrefs.DeleteKey("cheating");
 	};
 	
-	// Enable or disable the console as defined by player prefs
-	if (PlayerPrefs.GetInt("console") == 1 ){
-		isEnabled = true;
-	}
-	else{
-		isEnabled = true;
-	}
 
 	//Horrible ASCII Art, GO!
 	//Geo isn't a monospace font. Deal with it.
@@ -37,16 +29,19 @@ function Start () {
 				"    GG  GGGG   LL           YYYYYY    PPPPPP     HHHHHHH" + "\n" +
 				"  GG       GG   LL                YY        PP              HH       HH" + "\n" +
 				"GGGGGGG  LLLLLLL    YY        PP             HH       HH" + "\n";
-
 }
 
 function OnLevelLoaded () {
 	Start();
+	hide();
 }
 
 function Update () {
+	if ( Input.GetKeyDown("f4")) {
+		Application.CaptureScreenshot("screenshot.png",1);
+	}
 	// Don't do anything if the console is disabled
-	if (isEnabled == true){
+	if (PlayerPrefs.GetInt("consoleEnabled") == 1){
 		if (Input.GetButtonDown("console") == true){
 			if (visible == true){
 				hide();
@@ -85,27 +80,21 @@ function Update () {
 function parse () {
 	// Use ALL the if statements
 	valid = false;
-	if ( thisInput == "god"){
-		valid = true;
-		if ( GameObject.Find("Soul") !== null ){
-			PlayerPrefs.SetInt("cheating",1);
-			history += "\n Godmode enabled.";
-			GameObject.Find("Soul").GetComponent(death).god = true;
-		}
-		else{
-			history += "\n Unable to enter godmode";
-		};
-	};
+
 	if ( thisInput == "charge" ){
 		valid = true;
 		if ( GameObject.Find("GameMan") !== null ){
 			PlayerPrefs.SetInt("cheating",1);
 			history += "\n Fully charged abilty bar.";
-			GameObject.Find("GameMan").GetComponent(gameManager).charge = 1;
+			GameObject.Find("gameMan").GetComponent(gameManager).charge = 1;
 		}
 		else{
 			history += "\n Unable to charge ability bar.";
 		};
+	};
+	if ( thisInput == "cls" || thisInput == "clear" ){
+		valid = true;
+		history = "";
 	};
 	if ( thisInput == "extraLife" ){
 		valid = true;
@@ -118,10 +107,41 @@ function parse () {
 			history += "\n Unable to charge ability bar.";
 		};
 	};
-	if ( thisInput == "cls" || thisInput == "clear" ){
+	if ( thisInput == "god"){
 		valid = true;
-		history = "";
+		if ( GameObject.Find("Soul") !== null ){
+			PlayerPrefs.SetInt("cheating",1);
+			history += "\n Godmode enabled.";
+			GameObject.Find("Soul").GetComponent(death).god = true;
+		}
+		else{
+			history += "\n Unable to enter godmode";
+		};
 	};
+	if ( thisInput == "hide" ){
+		valid = true;
+		hide();
+	};
+	if ( thisInput == "ls /bin/bash" || thisInput == "ls /bin/bash/" ){
+		valid = true;
+		history += "\n Directory listing of /bin/bash/: \n  charge \n  cls \n  clear \n  extraLife \n  god \n  hide \n  ls \n  reset \n  screenshot \n  sudo";
+	}
+	if ( thisInput.Contains("ls") && valid == false ){
+		valid = true;
+		history += "\n Directory not found.";
+	};
+	if ( thisInput == "reset" ){
+		valid = true;
+		PlayerPrefs.DeleteAll();
+		Application.Quit();
+	};
+	if ( thisInput == "screenshot" ){
+		valid = true;
+		background.transform.position.y = 108;
+		Application.CaptureScreenshot("screenshot_"+ System.DateTime.Now.ToString("MM-dd-hh-mm-ss") +".png",1);
+		history += "\n screenshot saved as screenshot_" + System.DateTime.Now.ToString("MM-dd-hh-mm-ss") + ".png";
+		Invoke("show",Time.deltaTime);
+	}
 	if ( thisInput == "sudo" ){
 		valid = true;
 		history += "\n sudo what?";
@@ -136,7 +156,7 @@ function parse () {
 	};
 	if ( thisInput.Contains("sudo") && valid == false){
 		valid = true;
-		history += "\n glyph-user is not in the sudoers file. /n This incident will be reported.";
+		history += "\n glyph-user is not in the sudoers file. \n This incident will be reported.";
 	}
 	if ( thisInput == "help" ){
 		valid = true;
@@ -146,18 +166,7 @@ function parse () {
 		valid = true;
 		Application.Quit();
 	};
-	if ( thisInput == "hide" ){
-		valid = true;
-		hide();
-	};
-	if ( thisInput == "ls /bin/bash" || thisInput == "ls /bin/bash/" ){
-		valid = true;
-		history += "\n Directory listing of /bin/bash/: \n  charge \n  cls \n  clear \n  god \n  hide \n  sudo \n  ls";
-	}
-	if ( thisInput.Contains("ls") && valid == false ){
-		valid = true;
-		history += "\n Directory not found.";
-	};
+
 	
 	
 	if ( valid == false ){
@@ -170,6 +179,22 @@ function fadeTweenResponder ( alpha : float) {
 }
 
 function show () {
+	// Disable any button helper in the scene
+	if ( Application.loadedLevel == 1 ){
+		GameObject.Find("Main Menu").GetComponent(buttonHelper).enabled = false;
+	};
+	if ( Application.loadedLevel == 2 ){
+		GameObject.Find("Window").GetComponent(settingsHelper).enabled = false;
+	};
+	if ( Application.loadedLevel == 3 ){
+		GameObject.Find("Window").GetComponent(buttonHelper).enabled = false;
+	};
+	if ( Application.loadedLevel == 4 ){
+		//GameObject.Find("Window").GetComponent().enabled = false;
+	};
+	if ( Application.loadedLevel == 5 ){
+		GameObject.Find("Window").GetComponent(graphicsHelper).enabled = false;
+	};
 	visible = true;
 	background.transform.position.y = 0;
 	iTween.ColorTo(background,{"a":.7,"time":0.2});
@@ -177,7 +202,24 @@ function show () {
 }
 
 function hide () {
+	// Enable any button helper in the scene
+	if ( Application.loadedLevel == 1 ){
+		GameObject.Find("Main Menu").GetComponent(buttonHelper).enabled = true;
+	};
+	if ( Application.loadedLevel == 2 ){
+		GameObject.Find("Window").GetComponent(settingsHelper).enabled = true;
+	};
+	if ( Application.loadedLevel == 3 ){
+		GameObject.Find("Window").GetComponent(buttonHelper).enabled = true;
+	};
+	if ( Application.loadedLevel == 4 ){
+		//GameObject.Find("Window").GetComponent().enabled = true;
+	};
+	if ( Application.loadedLevel == 5 ){
+		GameObject.Find("Window").GetComponent(graphicsHelper).enabled = true;
+	};
 	visible = false;
 	iTween.ColorTo(background,{"a":0,"time":0.2});
 	iTween.ValueTo(gameObject,{"from":1,"to":0,"time":0.2,"onupdate":"fadeTweenResponder"});
+	iTween.MoveTo(background,{"y":108,"time":Time.deltaTime,"delay":0.2}); //Move out of view when animated out
 }

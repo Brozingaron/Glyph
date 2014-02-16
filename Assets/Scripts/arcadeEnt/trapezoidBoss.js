@@ -2,18 +2,22 @@
 
 // This is the trapezoid of doom's movement script
 
-var speed : float = 100; // The speed coeffecient on the enemy
+var speed : float = 5; // The maximum speed of the enemy
+var acceleration : float = 12; // The acceleration of the enemy in units/s/s
+var decceleration : float = -20; // The rate of decceleration of the enemy in units/s/s
 var targetingTime : float = 2; // How long in seconds to spend targeting the player
 var lethal : boolean = true;
 
+private var velocity : float; //How fast the object should be moving
+private var accelerating : boolean = true; //If the enemy is accelerating or deccelerating
 private var targeting : boolean = true; // If the enemy is targeting the player or not
-private var tweening : boolean = false; // If iTween has taken over yet
-private var rotating : boolean = false; // If iTween should rotate the object
 private var targetingT : float = 0.0; // How long the enemy has been targeting the player
-private var angle : float; // The angle of rotation to the player
-private var distanceTraveled : float = 0.0; // The distance this enemy has traveled
+var angle : float; // The angle of rotation to the player
+private var rotationTweened : boolean = false; //Has the object finished initially rotating?
+private var targetedAngle : float; // the angle to move towards the player
 private var target : GameObject;
 private var gameMan : gameManager;
+private var t : float;
 
 function Start () {
 	target = GameObject.Find("Soul");
@@ -26,13 +30,9 @@ function Start () {
 }
 
 function Update () {
-	if (gameMan.timeScale == 0){
-		iTween.Pause(gameObject);
-	}
-	else{
-		iTween.Resume(gameObject);
-	}
 	if ( targeting == true ){
+		// Calculate the angle between this object and the player
+		
 		// Avoid a divide by zero error
 		if ( target.transform.position.y - transform.position.y != 0 ){
 			// Rotate towards the player
@@ -40,56 +40,73 @@ function Update () {
 			// Deal with ArcTan's domain
 			// Quadrant 1 & 2
 			if ( target.transform.position.y - transform.position.y > 0 ){angle = 180 - angle;};
-			// Quadrant 3 & 4
-			if ( target.transform.position.y - transform.position.y < 0 ){angle = 360 - angle;};
+			// Quadrant 3
+			if ( target.transform.position.y - transform.position.y < 0 && target.transform.position.x - transform.position.x < 0 ){angle = 360 - angle;};
+			// Quadrant 4
+			if ( target.transform.position.y - transform.position.y < 0 && target.transform.position.x - transform.position.x > 0 ){angle = -1 * angle;};
 		}
 		else{
 			if ( target.transform.position.x - transform.position.x <= 0 ){ angle = 0; };
 			if ( target.transform.position.x - transform.position.x > 0 ){ angle = 180; };
+		};
+		
+		if ( targetingT >= 2 ){
+			targetedAngle = angle;
 		}
-		if ( tweening == true && rotating == false ){
-			// If the movement tween just ended, tween the rotation
-			tweening = false;
-			rotating = true;
-			iTween.RotateTo(gameObject,{"z":angle,"time":0.5,"easetype":"easeInQuart","oncomplete":"finishedRotating"});
-		}
-		if ( rotating == false ){
-			// If the movement tween didn't just end, set the rotation
-			transform.eulerAngles.z = angle;
-		}
+		
+		// Gradually rotate towards the player
+		if ( rotationTweened == false ){
+			velocity = targetingT * 2 ; //Speed up
+			
+			// Stop the acceleration after 1 the velocity reaches 1
+			if ( velocity >= 1 ){
+				rotationTweened = true;
+				velocity = 1;
+			};
+		};
+		
+		// Set the rotation
+		transform.Rotate(Vector3.forward * velocity * ( angle - transform.eulerAngles.z ) * gameMan.timeScale);
+		
+		
 		// Add to the counter
 		targetingT += Time.deltaTime * gameMan.timeScale;
+		
+		if ( targetingT >= targetingTime ){
+			targeting = false;
+			targetedAngle = angle;
+		};
 	};
 	
-	if ( targetingT >= targetingTime ){
-		targeting = false;
-	};
-	
-	if ( targeting == false && tweening == false ){
-		// Call an iTween function to move the enemy towards the targeted point
-		iTween.MoveTo(gameObject,{
-			"name":"trapezoidTween",
-			"position":target.transform.position,
-			"speed":speed,
-			"easetype":"easeInOutQuart",
-			"oncomplete":"reset"});
-		tweening = true;
+	if ( targeting == false ){
+		t += Time.deltaTime * gameMan.timeScale;
+		
+		// Use a piecewise function to tween velocity based on the integral of a = acceleration
+		if ( accelerating == true ){
+			velocity = acceleration * t; //Speed up
+		};
+		if ( velocity >= speed && accelerating == true ){
+			t = 0;
+			velocity = speed;
+			accelerating = false;
+		};
+		if ( accelerating == false ){
+			velocity = decceleration * t + speed; //Slow down
+		};
+			
+		transform.position += velocity * Vector3.Normalize( Vector3(Mathf.Sin(targetedAngle * Mathf.Deg2Rad), -1 * Mathf.Cos(targetedAngle * Mathf.Deg2Rad), 0)) * gameMan.timeScale;		
+		if ( velocity <= 0 && accelerating == false ){
+			t = 0;
+			accelerating = true;
+			targeting = true;
+			targetingT = 0;
+			rotationTweened = false;
+		};
 	};
 	
 	// Set boundaries
-	if (transform.position.x > 69){ transform.position.x = 69; };
-	if (transform.position.x < -69){ transform.position.x = -69; };
-	if (transform.position.y > 26){ transform.position.y = 26; };
-	if (transform.position.y < -14){ transform.position.y = -14; };
-}
-
-function reset () {
-	// Go back to the targeting phase
-	targeting = true;
-	targetingT = 0;
-}
-
-function finishedRotating () {
-	// Rotate manually when this function is called
-	rotating = false;
+	if (transform.position.x > 80){ transform.position.x = 80; };
+	if (transform.position.x < -80){ transform.position.x = -80; };
+	if (transform.position.y > 30){ transform.position.y = 30; };
+	if (transform.position.y < -20){ transform.position.y = -20; };
 }

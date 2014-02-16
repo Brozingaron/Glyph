@@ -26,7 +26,7 @@ function Update () {
 			if ( sceneTo == 8 ){ GameObject.Find("Highscore").guiText.text += PlayerPrefs.GetInt("endlessHS");};
 		}
 		// And if the mouse has been moved...
-		if ( Input.GetAxis("Mouse X") != 0 && Input.GetAxis("Mouse Y") != 0){
+		if ( Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0){
 			// ... And if the GameObject hasn't been hit with a ray since the last frame update, revert its texture
 			if (revert == 1 ){ 
 				gameObject.renderer.material.mainTexture = normal;
